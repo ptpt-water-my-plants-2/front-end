@@ -1,0 +1,148 @@
+/* $primary-lightgreen: 95A792;
+$primary-darkgreen: #596C68;
+$primary-dark: #403F48;
+$primary-whitish: #E3D9CA; */
+
+@import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
+
+body {
+  background-color: #e3d9ca;
+  color: #403f48;
+  font-family: "Fredoka One", cursive;
+}
+
+.App {
+  text-align: center;
+}
+
+.navBar {
+  background-color: #95a792;
+  margin: 0;
+  margin-top: -25px;
+  padding: 10px 0px;
+  height: 50px;
+  -webkit-box-shadow: 0px 1px 5px #8a8181;
+  -moz-box-shadow: 0px 1px 5px #8a8181;
+  box-shadow: 0px 1px 5px #8a8181;
+}
+
+h1 {
+  color: #95a792;
+  font-size: 2.3rem;
+  text-shadow: 2px 2px 2px #0a0909;
+}
+
+ul {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-direction: center;
+  justify-content: space-around;
+  margin-top: 25px;
+}
+
+li,
+a {
+  text-decoration: none;
+  list-style-type: none;
+  color: #282c34;
+}
+
+a:hover {
+  color: #e3d9ca;
+  text-shadow: 0.25px 0.25px 0.5px #554949;
+}
+
+.form {
+  margin: 75px auto 30px auto;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  width: 400px;
+  border: 1px solid black;
+  padding: 20px 30px 20px 30px;
+  background-color: #403f48;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 1px 5px #3d2121;
+  -moz-box-shadow: 0px 1px 5px #8a8181;
+  box-shadow: 0px 1px 5px #8a8181;
+}
+
+.form input {
+  width: 400px;
+  height: 40px;
+  margin: 5px;
+  text-align: center;
+  border-radius: 5px;
+  border: 0.5px solid rgb(34, 33, 33);
+}
+
+.form button {
+  width: 405px;
+  height: 45px;
+  margin: 5px;
+  font-size: 1.1rem;
+  background-color: #95a792;
+  border-radius: 5px;
+}
+
+/* .classButton {
+  width: 65%;
+  height: 45px;
+  margin: 5px;
+  font-size: 1.2rem;
+  background-color: #a45d5d;
+  color: #efefef;
+  border-radius: 5px;
+} */
+
+.detailsButton {
+  width: 65%;
+  height: 45px;
+  margin: 5px;
+  font-size: 1.2rem;
+  color: #403f48;
+  background-color: #e3d9ca;
+  border-radius: 5px;
+}
+
+/* CLASSES DISPLAYED */
+.plantSection {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+}
+.plantCard {
+  color: #e3d9ca;
+  min-width: 350px;
+  max-width: 450px;
+  width: 35%;
+  height: 230px;
+  margin: 25px 15px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 0.5px solid rgb(34, 33, 33);
+  -webkit-box-shadow: 0px 1px 5px #3d2121;
+  -moz-box-shadow: 0px 1px 5px #8a8181;
+  box-shadow: 0px 1px 5px #8a8181;
+  background-color: #596c68;
+}
+
+.classDetails {
+  background-color: #596c68;
+  color: #efefef;
+  width: 80%;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 1px 5px #3d2121;
+  -moz-box-shadow: 0px 1px 5px #a39999;
+  box-shadow: 0px 1px 5px #afa5a5;
+}
+
+img {
+  border-radius: 10px;
+}
