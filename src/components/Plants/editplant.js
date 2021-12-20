@@ -1,8 +1,95 @@
-export default function EditPlant() {
+import React, { useEffect, useContext, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+//import { axiosWithAuth } from '../utils/axiosWithAuth';
+import { GlobalPropsContext } from '../App';
 
+export default function EditPlant() {
+    const params = useParams();
+  const history = useHistory();
+  const { inputs, setInputs } = useContext(GlobalPropsContext);
+    const initialPlantInputs = useState('');
+
+    useEffect(() => {
+        axiosWithAuth()
+          .get(``)
+          .then((res) => {
+            let newArr = res.data.filter((cls) => cls.id === parseInt(params.id));
+            setInputs(newArr[0]);
+          });
+      }, [params.id, setInputs]);
+
+
+    const handleChange = (e) => {
+        setUsersPlants({ ...usersPlants, [e.target.name]: e.target.value });
+      };
+
+      const editplant = (e) => {
+        e.preventDefault();
+        axiosWithAuth()
+          .put('', inputs)
+          .then((res) => {
+            console.log(res);
+            history.push('');
+            setInputs(initialFakePlantData);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
     return (
         <div>
             <h1>EDIT PLANT</h1>
+            <form onSubmit={editplant}>
+            
+                {/* <label>
+                Plant Id
+                <input
+                    type="integer"
+                    name="plantId"
+                    value={inputs.plantId}
+                    onChange={handleChange}
+                />
+                </label>  */}
+                <label>
+                Nickname
+                <input
+                    type="text"
+                    name="nickname"
+                    value={inputs.nickname}
+                    onChange={handleChange}
+                />
+                </label> 
+                <label>
+                Species
+                <input
+                    type="text"
+                    name="species"
+                    value={inputs.species}
+                    onChange={handleChange}
+                />
+                </label> 
+                <label>
+                Owner
+                <input
+                    type="integer"
+                    name="owner"
+                    value={inputs.owner}
+                    onChange={handleChange}
+                />
+                </label> 
+                <label>
+                H20 Frequency
+                <input
+                    type="integer"
+                    name="h20Frequency"
+                    value={inputs.h20Frequency}
+                    onChange={handleChange}
+                />
+                </label>    
+                
+                <button>Edit Plant</button>
+            </form>  
+            
         </div>
     )
 }

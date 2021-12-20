@@ -1,7 +1,7 @@
 import './App.css';
 import { useState } from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-
+import {useHistory } from 'react-router-dom';
 
 import Login from './components/signuplogins/login';
 import Signup from './components/signuplogins/signup'
@@ -47,6 +47,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [user, setUser] = useState("Plantguy"); // set this to username once backend is seeding
   const [usersPlants, setUsersPlants] = useState(initialFakePlantData);  // seed soon from backend
+  const history = useHistory();
   //const [isFetchingPlants, setIsFetchingPlants] = useState(false);
 
 
