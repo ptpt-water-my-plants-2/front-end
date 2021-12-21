@@ -1,45 +1,52 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 //import { axiosWithAuth } from '../utils/axiosWithAuth';
-import { GlobalPropsContext } from '../App';
+import { GlobalPropsContext } from '../GlobalPropsContext';
 
 export default function EditPlant() {
     const params = useParams();
-  const history = useHistory();
-  const { inputs, setInputs } = useContext(GlobalPropsContext);
-    const initialPlantInputs = useState('');
+    const history = useHistory();
+    const { inputs, setInputs } = useState({
+      nickname: '',
+      species: '',
+      owner: '',
+      h20Frequency: 0
+    });
+    // const initialPlantInputs = useState('');
 
-    useEffect(() => {
-        axiosWithAuth()
-          .get(``)
-          .then((res) => {
-            let newArr = res.data.filter((cls) => cls.id === parseInt(params.id));
-            setInputs(newArr[0]);
-          });
-      }, [params.id, setInputs]);
+    // useEffect(() => {
+    //     axiosWithAuth()
+    //       .get(``)
+    //       .then((res) => {
+    //         let newArr = res.data.filter((cls) => cls.id === parseInt(params.id));
+    //         setInputs(newArr[0]);
+    //       });
+    //   }, [params.id, setInputs]);
 
 
     const handleChange = (e) => {
-        setUsersPlants({ ...usersPlants, [e.target.name]: e.target.value });
+        // setUsersPlants({ ...usersPlants, [e.target.name]: e.target.value });
+        setInputs({ ...inputs, [e.target.name]: e.target.value });
       };
 
       const editplant = (e) => {
         e.preventDefault();
-        axiosWithAuth()
-          .put('', inputs)
-          .then((res) => {
-            console.log(res);
-            history.push('');
-            setInputs(initialFakePlantData);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        // axiosWithAuth()
+        //   .put('', inputs)
+        //   .then((res) => {
+        //     console.log(res);
+        //     history.push('');
+        //     setInputs(initialFakePlantData);
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //   });
       };
+
     return (
         <div>
             <h1>EDIT PLANT</h1>
-            <form onSubmit={editplant}>
+            <form onSubmit={null}>
             
                 {/* <label>
                 Plant Id
