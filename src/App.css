@@ -40,6 +40,15 @@ ul {
   margin-top: 25px;
 }
 
+ul button {
+  width: 70px;
+  height: 25px;
+  background-color: #e3d9ca;
+  color: #0a0909;
+  list-style: none;
+  border-radius: 3px;
+}
+
 li,
 a {
   text-decoration: none;

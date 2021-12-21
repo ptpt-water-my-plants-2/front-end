@@ -11,9 +11,10 @@ import AddPlant from './components/Plants/addplant'
 import EditPlant from './components/Plants/editplant'
 import EditUserProfile from './components/UserProfile/edituserprofile'
 import PlantDetails from './components/Plants/plantdetails'
-//import PrivateRoute from './components/PrivateRoute'
+import PrivateRoute from './components/PrivateRoute'
 import { GlobalPropsContext } from './components/GlobalPropsContext';
 import { axiosWithAuth } from './components/utils/axiosWithAuth';
+import Logout from './components/signuplogins/logout';
 
 
 const initialFakePlantData = [
@@ -45,45 +46,73 @@ const initialFakePlantData = [
 
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [user, setUser] = useState("Plantguy"); // set this to username once backend is seeding
-  const [user_id, setUserId] = useState();
-  const [usersPlants, setUsersPlants] = useState(initialFakePlantData);  // seed soon from backend
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null); // set this to username once backend is seeding
+  const [user_id, setUserId] = useState(null);
+  const [usersPlants, setUsersPlants] = useState(null);
+  const [IsFetchingUsersPlants, setIsFetchingUsersPlants] = useState(false)
   const [IsFetchingUserInfo, setIsFetchingUserInfo] = useState(false);
 
+  console.log(user_id, "user_id")
+  console.log(isLoggedIn, "isLoggedIn")
 
+  // BUILD THIS TO KEEP USER LOGGED IN by token when they don't click logout
+  useEffect(() => {
+    //api call to check token
+    //post request tpass in token
+    // backend router needs to validate token and then send back user_id that belongs to token
+    // loclalstorage.getitem.(:token)
+    //if response then isLoggedIn = true
+    //setUserId   setUserPlants
+    //
+  }, [])
 
   //GET USER INFO FROM USER ID
-  useEffect(() => {
-    async function getUserInfo() {
-      setIsFetchingUserInfo(true);
+  async function getUserInfo(id) {
+    setIsFetchingUserInfo(true);
 
-      try {
-        const res = await axiosWithAuth().get(`https://water-my-plants-app2.herokuapp.com/api/users/${user_id}`);
-        console.log(res, "get user info res")
-
-      }
-      catch (err) {
-        console.log("error: ", err);
-      }
-
-      setIsFetchingUserInfo(false);
+    try {
+      const res = await axiosWithAuth().get(`https://water-my-plants-app2.herokuapp.com/api/users/${id}`);
+      console.log(res, "get user info res")
+      setUser(res.data[0])
     }
-    getUserInfo();
-  }, user_id)
+    catch (err) {
+      console.log("error: ", err);
+    }
+
+    setIsFetchingUserInfo(false);
+  }
+
+  //get plants that belong to user
+  async function getUsersPlants(id) {
+    setIsFetchingUsersPlants(true);
+
+    try {
+      const res = await axiosWithAuth().get(`https://water-my-plants-app2.herokuapp.com/api/users/${id}/users-plants`);
+      console.log(res, "get users plants-- res")
+      setUsersPlants(res.data) // this is an array of objects
+    }
+    catch (err) {
+      console.log("error: ", err);
+    }
+    setIsFetchingUsersPlants(false);
+  }
+
 
 
   return (
 
     <Router>
       <div className="App">
-        <GlobalPropsContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser, user_id, setUserId, usersPlants }}>
+        <GlobalPropsContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser, user_id, setUserId, usersPlants, IsFetchingUsersPlants }}>
 
           <NavBar />
           <Switch>
             <Route exact path="/signup"><Signup /></Route>
 
-            <Route exact path="/login"><Login /></Route>
+            <Route exact path="/login"><Login getUsersPlants={getUsersPlants} getUserInfo={getUserInfo} user_id={user_id} setUserId={setUserId} /></Route>
+
+            <Route exact path="/logout"><Logout setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} setUserId={setUserId} /></Route>
 
             <Route exact path="/addnewplant"> <AddPlant /></Route>
             <Route path="/edituserprofile"> <EditUserProfile /></Route>
@@ -91,9 +120,9 @@ function App() {
 
             <Route path="/details/:id"> <PlantDetails /></Route>
 
-            <Route exact path="/"><Home /></Route>
+            {/* <Route exact path="/"><Home /></Route> */}
 
-            {/* <PrivateRoute exact path="/" component={Home} /> */}
+            <PrivateRoute exact path="/" component={Home} />
           </Switch>
 
         </GlobalPropsContext.Provider>

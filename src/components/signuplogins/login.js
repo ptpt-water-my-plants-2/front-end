@@ -6,6 +6,7 @@
 //and can login with the registered credentials.
 import { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router";
+import { Redirect } from "react-router-dom";
 import { GlobalPropsContext } from '../GlobalPropsContext'
 import axios from 'axios';
 
@@ -14,18 +15,12 @@ import axios from 'axios';
 const initialLogInFormValues = { username: "", password: "" };
 
 
-export default function Login() {
+export default function Login({ getUserInfo, getUsersPlants }) {
     const [loginFormValues, setLogInFormValues] = useState(initialLogInFormValues);
-    const { user_id, setUserId, isLoggedIn, setIsLoggedIn } = useContext(GlobalPropsContext);
+    const { isLoggedIn, setIsLoggedIn, user_id, setUserId } = useContext(GlobalPropsContext);
     const [loginError, setLoginError] = useState(false);
 
     let history = useHistory();
-
-    useEffect(() => {  //'https://water-my-plants-app2.herokuapp.com/api/auth/login
-        axios.post('https://localhost:9000/api/auth/login', loginFormValues)
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
-    }, []);
 
     const onChange = (e) => {
         setLogInFormValues({
@@ -34,27 +29,30 @@ export default function Login() {
         })
     }
 
-    console.log(loginFormValues);
-
     const loginSubmitHandler = (e) => {
         e.preventDefault();
-        // setIsLoading(true);
-        // console.log(isLoading);
-
-        //         setLoginError(false);
-        //         setIsLoggedIn(true);
-
         axios.post('https://water-my-plants-app2.herokuapp.com/api/auth/login', loginFormValues)
-            .then(res => {
-                console.log(res)
-                setIsLoggedIn(true)
-                setUserId(res.data.user_id)
-                console.log(user_id, "user_id state")
-                console.log(isLoggedIn, "isLoggedIn state")
-                history.push("/")
+            .then((res => {
+                localStorage.setItem('token', res.data.token);
+                console.log(res, "res")
+                if (localStorage.getItem('token')) {
+                    setIsLoggedIn(true)
+                    setUserId(res.data.user_id)
+                    getUserInfo(res.data.user_id).then((res) => {
+                        console.log(res, "userInfo from login")
+                    });
+                    getUsersPlants(res.data.user_id).then((res) => {
+                        history.push("/")
+                    })
+                }
+            }))
+            .catch(err => {
+                console.log(err);
+                <Redirect to="/login" />
             })
-            .catch(err => console.log(err));
     }
+
+
 
 
 
