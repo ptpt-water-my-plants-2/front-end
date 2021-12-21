@@ -9,8 +9,8 @@ export default function EditPlant() {
     const { inputs, setInputs } = useState({
       nickname: '',
       species: '',
-      owner: '',
-      h20Frequency: 0
+      owner: 0,
+      h20Frequency: ''
     });
     // const initialPlantInputs = useState('');
 
