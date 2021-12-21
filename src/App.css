@@ -150,7 +150,66 @@ img {
 .user-info {
   /* border: 5px solid blue; */
   font-size: 1.8rem;
-  text-align: left;
-  padding-left: 43rem;
+  /* text-align: left; */
+  /* padding-left: 43rem; */
   margin-top: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-info div {
+  text-align: left;
+  /* border: 5px solid orange; */
+  width: 30%;
+  padding-left: 30px;
+}
+
+.edit-button button {
+  width: 100px;
+  height: 50px;
+  font-size: 20px;
+  border-radius: 15px;
+  border: 3px solid white;
+  background-color: green;
+  color: white;
+}
+
+.edit-form {
+  /* border: 5px solid darkgreen; */
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: left;
+  /* border: 5px solid cyan; */
+  /* width: 30%; */
+}
+
+.edit-form label {
+  margin-bottom: 1rem;
+  font-size: 15px;
+}
+
+.edit-form input {
+  margin-left: 0.5rem;
+  font-size: 15px;
+}
+
+.edit-form button {
+  width: 100px;
+  height: 50px;
+  font-size: 20px;
+  border-radius: 15px;
+  border: 3px solid white;
+  background-color: green;
+  color: white;
+  margin-top: 20px;
+  align-self: center;
 }
