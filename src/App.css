@@ -156,7 +156,6 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  
 }
 
 .user-info div {
@@ -177,21 +176,31 @@ img {
 }
 
 .edit-form {
-  border: 5px solid darkgreen;
+  /* border: 5px solid darkgreen; */
   margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .edit-form form {
   display: flex;
   flex-direction: column;
-  
+  justify-content: space-around;
   text-align: left;
-  
-  border: 5px solid cyan;
-  width: 30%;
+  /* border: 5px solid cyan; */
+  /* width: 30%; */
 }
 
+.edit-form label {
+  margin-bottom: 1rem;
+  font-size: 15px;
+}
 
+.edit-form input {
+  margin-left: 0.5rem;
+  font-size: 15px;
+}
 
 .edit-form button {
   width: 100px;
@@ -201,5 +210,6 @@ img {
   border: 3px solid white;
   background-color: green;
   color: white;
-  margin-top: 30px;
+  margin-top: 20px;
+  align-self: center;
 }
