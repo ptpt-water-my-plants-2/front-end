@@ -2,8 +2,9 @@
 // a unique `username`, a valid mobile `phoneNumber` and a `password`.
 
 import "../../App.css"
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router";
+import axios from "axios";
 //import { GlobalPropsContext } from '../GlobalPropsContext';
 
 
@@ -26,7 +27,8 @@ const initialSignUpFormErrors = {
 }
 
 // submit is disabled until inputs validated
-const initialDisabled = true;
+// this should be set to true once validation is set up
+const initialDisabled = false;
 
 
 export default function Signup() {
@@ -39,6 +41,7 @@ export default function Signup() {
 
     // controls the form input changes via state
     const onChange = (e) => {
+        console.log(signUpFormValues)
         setSignUpFormValues({
             ...signUpFormValues, [e.target.name]: e.target.value
         })
@@ -63,12 +66,34 @@ export default function Signup() {
     //     setSignUpFormErrors({ ...signUpformErrors, [name]: err.message })
     //   })
 
+    // possibly trim these if yu haven't elsewhere
+    let registerWithTheseFormValues = {
+        firstName: signUpFormValues.firstName,
+        lastName: signUpFormValues.lastName,
+        username: signUpFormValues.username,
+        phoneNumber: signUpFormValues.phoneNumber,
+        password: `${(signUpFormValues.password === signUpFormValues.retypePassword) ? signUpFormValues.password : ""}`
+    }
+
+    const registerNewUser = (e) => {
+        e.preventDefault();
+        console.log("submit clicked for register user")
+        axios.post('https://water-my-plants-app2.herokuapp.com/api/auth/register', registerWithTheseFormValues)
+            .then((res) => {
+                console.log(res, "res from registering new user")
+                alert(`Welcome ${registerWithTheseFormValues.firstName}! Please login to begin your plant care!`)
+                history.push("/login")
+            })
+            .catch((err) => {
+                console.log(err, "error in registering new user")
+            })
+    }
 
 
     return (
         <div>
             <div>
-                <form onSubmit="" className="form">
+                <form onSubmit={registerNewUser} className="form">
                     {<h1>Sign Up</h1>}
                     <input
                         placeholder="First Name"
@@ -99,13 +124,13 @@ export default function Signup() {
                     />
 
                     <input
-                        placeholder="youremail@email.com"
-                        name="email"
-                        label="email"
-                        type="email"
-                        id="email"
+                        placeholder="8675309"
+                        name="phoneNumber"
+                        label="phoneNumber"
+                        type="phoneNumber"
+                        id="phoneNumber"
                         onChange={onChange}
-                        value={signUpFormValues.email}
+                        value={signUpFormValues.phoneNumber}
                     />
                     <input
                         placeholder="password"

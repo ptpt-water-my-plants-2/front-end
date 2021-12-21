@@ -1,12 +1,24 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router"
 import "../../App.css"
 import { GlobalPropsContext } from "../GlobalPropsContext";
 
 
 
 export default function NavBar() {
-    const { isLoggedIn } = useContext(GlobalPropsContext);
+    const { isLoggedIn, setIsLoggedIn } = useContext(GlobalPropsContext);
+    let history = useHistory();
+
+    // logout function 
+    const logout = () => {
+        localStorage.removeItem("token")
+
+        setIsLoggedIn(false)
+        console.log(isLoggedIn)
+
+        history.push('/login');
+    }
 
 
     return (
@@ -28,7 +40,7 @@ export default function NavBar() {
                     {(isLoggedIn === false) && <li><Link to="/login">Login</Link></li>}
 
                     {/* logout shown when loggedin */}
-                    {(isLoggedIn === true) && <li><Link to="/login">Logout </Link> </li>}
+                    {(isLoggedIn === true) && <li><button onClick={logout} >Logout</button></li>}
 
                     {/* signup shown when not loggedin */}
                     {(isLoggedIn === false) && <li><Link to="/signup">Signup</Link> </li>}

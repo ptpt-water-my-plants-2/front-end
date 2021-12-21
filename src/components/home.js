@@ -1,7 +1,7 @@
-import { useState, useContext } from "react"
+//import { useState, useContext } from "react"
 import "../App.css"
 import MyPlants from '../components/Plants/myplants'
-import { GlobalPropsContext } from "./GlobalPropsContext";
+//import { GlobalPropsContext } from "./GlobalPropsContext";
 
 
 export default function HomeClient() {
