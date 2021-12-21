@@ -14,6 +14,11 @@ import PlantDetails from './components/Plants/plantdetails'
 //import PrivateRoute from './components/PrivateRoute'
 import { GlobalPropsContext } from './components/GlobalPropsContext';
 
+const fakeUser = {
+    username: 'idkw',
+    password: '1234',
+    phoneNumber: '123-555-6666'
+};
 
 const initialFakePlantData = [
   {
@@ -45,7 +50,7 @@ const initialFakePlantData = [
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [user, setUser] = useState("Plantguy"); // set this to username once backend is seeding
+  const [user, setUser] = useState(fakeUser); // set this to username once backend is seeding
   const [usersPlants, setUsersPlants] = useState(initialFakePlantData);  // seed soon from backend
   //const [isFetchingPlants, setIsFetchingPlants] = useState(false);
 

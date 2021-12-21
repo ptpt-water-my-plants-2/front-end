@@ -8,7 +8,7 @@ export default function MyPlants() {
 
     return (
         <div>
-            {<h1>{user}'s PLANTS</h1>}
+            {<h1>{user.username}'s PLANTS</h1>}
             <div className="plantSection">
                 {console.log(usersPlants)}
                 {/* isFetchingPlants ? "Loading Plants..." : */}
