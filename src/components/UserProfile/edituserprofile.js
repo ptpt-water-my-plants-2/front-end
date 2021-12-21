@@ -9,11 +9,35 @@ import { GlobalPropsContext } from "../GlobalPropsContext";
 
 export default function EditUserProfile() {
     const [userValues, setUserValues] = useState({
-        username: '',
         password: '',
         phoneNumber: ''
     })
-    const { user } = useContext(GlobalPropsContext);
+    const { user, setUser } = useContext(GlobalPropsContext);
+
+    const handleChanges = e => {
+        setUserValues({
+            ...userValues,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    // console.log(userValues);
+    
+    const editInfo = e => {
+        e.preventDefault();
+        setUserValues({
+            ...userValues,
+            password: '',
+            phoneNumber: ''
+        })
+        setUser({
+            ...user,
+            password: userValues.password,
+            phoneNumber: userValues.phoneNumber
+        });
+    }
+
+    // console.log(user);
 
     return (
         <div>
@@ -26,26 +50,18 @@ export default function EditUserProfile() {
                     <p>Phone Number: {user.phoneNumber}</p>
                 </div>
             </div>
-            <div className='edit-button'>
+            {/* <div className='edit-button'>
                 <button>Edit</button>
-            </div>
+            </div> */}
             <div className='edit-form'>
-                <form>
-                    <label>
-                        Username:
-                        <input
-                            type='text'
-                            name='username'
-                            onChange={null}
-                            value={userValues.username}
-                        />
-                    </label>
+                <h2>Edit Info</h2>
+                <form onSubmit={editInfo}>
                     <label>
                         Password:
                         <input
-                            type='text'
+                            type='password'
                             name='password'
-                            onChange={null}
+                            onChange={handleChanges}
                             value={userValues.password}
                         />
                     </label>
@@ -54,7 +70,7 @@ export default function EditUserProfile() {
                         <input
                             type='text'
                             name='phoneNumber'
-                            onChange={null}
+                            onChange={handleChanges}
                             value={userValues.phoneNumber}
                         />
                     </label>
