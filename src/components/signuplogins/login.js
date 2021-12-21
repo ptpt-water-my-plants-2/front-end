@@ -16,41 +16,43 @@ const initialLogInFormValues = { username: "", password: "" };
 
 export default function Login() {
     const [loginFormValues, setLogInFormValues] = useState(initialLogInFormValues);
-    const { user, setIsLoggedIn } = useContext(GlobalPropsContext);
+    const { user_id, setUserId, isLoggedIn, setIsLoggedIn } = useContext(GlobalPropsContext);
     const [loginError, setLoginError] = useState(false);
 
     let history = useHistory();
 
-    useEffect(() => {
-        axios.post('https://water-my-plants-app2.herokuapp.com/api/auth/login', loginFormValues)
+    useEffect(() => {  //'https://water-my-plants-app2.herokuapp.com/api/auth/login
+        axios.post('https://localhost:9000/api/auth/login', loginFormValues)
             .then(res => console.log(res))
             .catch(err => console.log(err));
     }, []);
 
     const onChange = (e) => {
         setLogInFormValues({
-            ...loginFormValues, 
+            ...loginFormValues,
             [e.target.name]: e.target.value
         })
     }
-    
+
     console.log(loginFormValues);
 
     const loginSubmitHandler = (e) => {
         e.preventDefault();
         // setIsLoading(true);
         // console.log(isLoading);
-        // if (user === true) {
-        //     if (loginFormValues.username !== "lambda" && loginFormValues.password !== "school") {
-        //         setLoginError(true);
-        //     } else {
+
         //         setLoginError(false);
         //         setIsLoggedIn(true);
-        //         history.push("/")
-        //     }
-        // }
+
         axios.post('https://water-my-plants-app2.herokuapp.com/api/auth/login', loginFormValues)
-            .then(res => console.log(res))
+            .then(res => {
+                console.log(res)
+                setIsLoggedIn(true)
+                setUserId(res.data.user_id)
+                console.log(user_id, "user_id state")
+                console.log(isLoggedIn, "isLoggedIn state")
+                history.push("/")
+            })
             .catch(err => console.log(err));
     }
 

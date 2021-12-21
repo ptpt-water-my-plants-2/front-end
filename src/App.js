@@ -1,7 +1,7 @@
 import './App.css';
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import {useHistory } from 'react-router-dom';
+
 
 import Login from './components/signuplogins/login';
 import Signup from './components/signuplogins/signup'
@@ -13,12 +13,8 @@ import EditUserProfile from './components/UserProfile/edituserprofile'
 import PlantDetails from './components/Plants/plantdetails'
 //import PrivateRoute from './components/PrivateRoute'
 import { GlobalPropsContext } from './components/GlobalPropsContext';
+import { axiosWithAuth } from './components/utils/axiosWithAuth';
 
-const fakeUser = {
-    username: 'idkw',
-    password: '1234',
-    phoneNumber: '123-555-6666'
-};
 
 const initialFakePlantData = [
   {
@@ -50,41 +46,38 @@ const initialFakePlantData = [
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [user, setUser] = useState(fakeUser); // set this to username once backend is seeding
+  const [user, setUser] = useState("Plantguy"); // set this to username once backend is seeding
+  const [user_id, setUserId] = useState();
   const [usersPlants, setUsersPlants] = useState(initialFakePlantData);  // seed soon from backend
-  const history = useHistory();
-  //const [isFetchingPlants, setIsFetchingPlants] = useState(false);
+  const [IsFetchingUserInfo, setIsFetchingUserInfo] = useState(false);
 
 
-  //*******will be used once api is ready for getting classes******
-  // const client = axios.create({
-  //   baseURL: "https://reqres.in"
-  // });
 
-  // useEffect(() => {
-  //   async function getAllPlants() {
-  //     setIsFetchingPlants(true);
+  //GET USER INFO FROM USER ID
+  useEffect(() => {
+    async function getUserInfo() {
+      setIsFetchingUserInfo(true);
 
-  //     try {
-  //       const res = await client.get("/api/unknown");
-  //       //setAllPlants(res.data);
+      try {
+        const res = await axiosWithAuth().get(`https://water-my-plants-app2.herokuapp.com/api/users/${user_id}`);
+        console.log(res, "get user info res")
 
-  //     }
-  //     catch (err) {
-  //       console.log("error: ", err);
-  //     }
+      }
+      catch (err) {
+        console.log("error: ", err);
+      }
 
-  //     setIsFetchingPlants(false);
-  //   }
-  //   getAllPlants();
-  // }, [])
+      setIsFetchingUserInfo(false);
+    }
+    getUserInfo();
+  }, user_id)
 
 
   return (
 
     <Router>
       <div className="App">
-        <GlobalPropsContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser, usersPlants }}>
+        <GlobalPropsContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser, user_id, setUserId, usersPlants }}>
 
           <NavBar />
           <Switch>
