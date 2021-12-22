@@ -156,6 +156,11 @@ img {
   border-radius: 10px;
 }
 
+.errors {
+  color: red;
+  font-size: 1.7rem;
+}
+
 /* user info and user edit form */
 .user-info {
   /* border: 5px solid blue; */
