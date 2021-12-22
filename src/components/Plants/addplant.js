@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GlobalPropsContext } from '../GlobalPropsContext';
+import { addPlantSchema } from '../../validation/formSchemas';
+import * as yup from 'yup';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
 export default function AddPlant() {
@@ -9,56 +11,60 @@ export default function AddPlant() {
         species: '',
         h2OFrequency: ''
     });
+    const [inputErrors, setInputErrors] = useState({
+        nickname: '',
+        species: '',
+        h2OFrequency: ''
+    })
     const { usersPlants, setUsersPlants } = useContext(GlobalPropsContext);
     const history = useHistory();
 
     const handleChange = (e) => {
-        // setUsersPlants({ ...usersPlants, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+
+        yup.reach(addPlantSchema, name)
+            .validate(value)
+            .then(() => {
+                setInputErrors({ ...inputErrors, [name]: "" })
+            })
+            .catch(err => {
+                setInputErrors({ ...inputErrors, [name]: err.message })
+            });
+        
         setInputs({
             ...inputs,
-            [e.target.name]: e.target.value
-        })
+            [name]: value
+        });
     };
 
     console.log(inputs);
 
     const postNewPlant = (e) => {
         e.preventDefault();
-         axiosWithAuth()
+        axiosWithAuth()
            .post('https://water-my-plants-app2.herokuapp.com/api/plants/', inputs)
            .then((res) => {
-            console.log(res);
-            setUsersPlants({
-                ...usersPlants,
-                nickname: inputs.nickname,
-                species: inputs.species,
-                h2OFrequency: inputs.h2OFrequency
+                console.log(res);
+                
+                setUsersPlants({
+                    ...usersPlants,
+                    nickname: inputs.nickname,
+                    species: inputs.species,
+                    h2OFrequency: inputs.h2OFrequency
+                });
+                
+                setInputs({
+                    ...inputs,
+                    nickname: '',
+                    species: '',
+                    h2OFrequency: ''
+                });
+            
+                history.push('/');
+            })
+            .catch((err) => {
+                console.log(err);
             });
-            setInputs({
-                ...inputs,
-                nickname: '',
-                species: '',
-                h2OFrequency: ''
-            });
-            history.push('/');
-           
-           })
-           .catch((err) => {
-            console.log(err);
-          });
-        // setUsersPlants({
-        //     ...usersPlants,
-        //     nickname: inputs.nickname,
-        //     species: inputs.species,
-        //     h2OFrequency: inputs.h2OFrequency
-        // });
-        // setInputs({
-        //     ...inputs,
-        //     nickname: '',
-        //     species: '',
-        //     h2OFrequency: ''
-        // });
-       
     };
 
     return (
@@ -120,6 +126,11 @@ export default function AddPlant() {
 
                 <button>Add Plant</button>
             </form>
+            <div className='errors'>
+                <p>{inputErrors.nickname}</p>
+                <p>{inputErrors.species}</p>
+                <p>{inputErrors.h2OFrequency}</p>
+            </div>
         </div>
     )
 }
