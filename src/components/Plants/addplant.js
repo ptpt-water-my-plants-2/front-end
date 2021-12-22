@@ -22,11 +22,6 @@ export default function AddPlant() {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        setInputs({
-            ...inputs,
-            [name]: value
-        })
-        
         yup.reach(addPlantSchema, name)
             .validate(value)
             .then(() => {
@@ -34,31 +29,38 @@ export default function AddPlant() {
             })
             .catch(err => {
                 setInputErrors({ ...inputErrors, [name]: err.message })
-            })
+            });
+        
+        setInputs({
+            ...inputs,
+            [name]: value
+        });
     };
 
     console.log(inputs);
 
     const postNewPlant = (e) => {
         e.preventDefault();
-         axiosWithAuth()
+        axiosWithAuth()
            .post('https://water-my-plants-app2.herokuapp.com/api/plants/', inputs)
            .then((res) => {
-            console.log(res);
-            setUsersPlants({
-                ...usersPlants,
-                nickname: inputs.nickname,
-                species: inputs.species,
-                h2OFrequency: inputs.h2OFrequency
-            });
-            setInputs({
-                ...inputs,
-                nickname: '',
-                species: '',
-                h2OFrequency: ''
-            });
-            history.push('/');
-           
+                console.log(res);
+                
+                setUsersPlants({
+                    ...usersPlants,
+                    nickname: inputs.nickname,
+                    species: inputs.species,
+                    h2OFrequency: inputs.h2OFrequency
+                });
+                
+                setInputs({
+                    ...inputs,
+                    nickname: '',
+                    species: '',
+                    h2OFrequency: ''
+                });
+            
+                history.push('/');
            })
            .catch((err) => {
             console.log(err);
