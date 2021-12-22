@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { GlobalPropsContext } from "../GlobalPropsContext"; 
+import { GlobalPropsContext } from "../GlobalPropsContext";
 
 // const fakeUser = {
 //     username: 'idkw',
@@ -22,7 +22,7 @@ export default function EditUserProfile() {
     }
 
     // console.log(userValues);
-    
+
     const editInfo = e => {
         e.preventDefault();
         setUserValues({
@@ -46,7 +46,6 @@ export default function EditUserProfile() {
             <div className='user-info'>
                 <div>
                     <p>Username: {user.username}</p>
-                    <p>Password: {user.password}</p>
                     <p>Phone Number: {user.phoneNumber}</p>
                 </div>
             </div>

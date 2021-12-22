@@ -52,9 +52,6 @@ export default function Signup() {
                 setSignUpFormValueErrors({ ...signUpFormValueErrors, [name]: err.message })
             })
 
-
-        console.log(signUpFormValues)
-
         setSignUpFormValues({
             ...signUpFormValues, [name]: value
         })
@@ -93,7 +90,8 @@ export default function Signup() {
         lastName: signUpFormValues.lastName,
         username: signUpFormValues.username,
         phoneNumber: signUpFormValues.phoneNumber,
-        password: `${(signUpFormValues.password === signUpFormValues.retypePassword) ? signUpFormValues.password : ""}`
+        // password: `${(signUpFormValues.password === signUpFormValues.retypePassword) ? signUpFormValues.password : ""}`
+        password: signUpFormValues.password
     }
 
     const registerNewUser = (e) => {

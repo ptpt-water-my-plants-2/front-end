@@ -39,14 +39,6 @@ export default function Login({ getUserInfo, getUsersPlants }) {
         })
     }
 
-    
-    console.log(loginFormValues);
-    
-    const signUpHandler = e => {
-        e.preventDefault();
-        history.push('/signup');
-    }
-    
 
     const loginSubmitHandler = (e) => {
         e.preventDefault();
@@ -74,10 +66,10 @@ export default function Login({ getUserInfo, getUsersPlants }) {
 
     useEffect(() => {
         loginSchema
-        .isValid(loginFormValues)
-        .then(isSchemaValid => {
-            setDisabled(!isSchemaValid)
-        })
+            .isValid(loginFormValues)
+            .then(isSchemaValid => {
+                setDisabled(!isSchemaValid)
+            })
     })
 
 
@@ -109,9 +101,7 @@ export default function Login({ getUserInfo, getUsersPlants }) {
                     Log In
                 </button>
             </form>
-            <button onClick={signUpHandler}>
-                Sign Up
-            </button>
+
         </div>
     )
 }

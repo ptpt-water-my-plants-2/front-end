@@ -80,7 +80,7 @@ export default function AddPlant() {
                         onChange={handleChange}
                     />
 
-                </label> 
+                </label>
                 {/* <label>
 
                 </label>
@@ -94,7 +94,7 @@ export default function AddPlant() {
                         onChange={handleChange}
                     />
 
-                </label>  */
+                </label>  */}
 
                 <label>
                     H2O Frequency:
@@ -104,14 +104,10 @@ export default function AddPlant() {
                         value={inputs.h2OFrequency}
                         onChange={handleChange}
                     />
-                </label>    
-                
+                </label>
+
                 <button>Add Plant</button>
-
-                <button>Add Class</button>
-
             </form>
-
         </div>
     )
 }
