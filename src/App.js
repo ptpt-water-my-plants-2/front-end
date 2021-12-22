@@ -13,7 +13,7 @@ import EditUserProfile from './components/UserProfile/edituserprofile'
 import PlantDetails from './components/Plants/plantdetails'
 import PrivateRoute from './components/PrivateRoute'
 import { GlobalPropsContext } from './components/GlobalPropsContext';
-import { axiosWithAuth } from './components/utils/axiosWithAuth';
+import axiosWithAuth from './components/utils/axiosWithAuth';
 import Logout from './components/signuplogins/logout';
 
 
