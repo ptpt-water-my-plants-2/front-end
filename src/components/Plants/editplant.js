@@ -4,13 +4,13 @@ import { useHistory, useParams } from 'react-router-dom';
 import { GlobalPropsContext } from '../GlobalPropsContext';
 
 export default function EditPlant() {
+    const { userPlants } = useContext(GlobalPropsContext);
     const params = useParams();
     const history = useHistory();
     const { inputs, setInputs } = useState({
       nickname: '',
       species: '',
-      owner: 0,
-      h20Frequency: ''
+      h2OFrequency: ''
     });
     // const initialPlantInputs = useState('');
 
@@ -75,7 +75,7 @@ export default function EditPlant() {
                     onChange={handleChange}
                 />
                 </label> 
-                <label>
+                {/* <label>
                 Owner
                 <input
                     type="integer"
@@ -83,13 +83,13 @@ export default function EditPlant() {
                     value={inputs.owner}
                     onChange={handleChange}
                 />
-                </label> 
+                </label>  */}
                 <label>
-                H20 Frequency
+                H2O Frequency
                 <input
                     type="integer"
                     name="h20Frequency"
-                    value={inputs.h20Frequency}
+                    value={inputs.h2OFrequency}
                     onChange={handleChange}
                 />
                 </label>    

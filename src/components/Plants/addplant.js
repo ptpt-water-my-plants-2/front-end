@@ -7,10 +7,9 @@ export default function AddPlant() {
     const [inputs, setInputs] = useState({
         nickname: '',
         species: '',
-        owner: '',
-        h20Frequency: 0
+        h2OFrequency: ''
     });
-    // const [usersPlants, setUsersPlants] = useContext(GlobalPropsContext);
+    const { usersPlants, setUsersPlants } = useContext(GlobalPropsContext);
     const history = useHistory();
 
     const handleChange = (e) => {
@@ -23,24 +22,37 @@ export default function AddPlant() {
 
     console.log(inputs);
 
-    //   const postNewPlant = (e) => {
-    //     e.preventDefault();
-    //     axiosWithAuth()
-    //       .post('', inputs)
-    //       .then((res) => {
-    //         console.log(res);
-    //         history.push('');
-    //         setInputs(initialFakePlantData);
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       });
-    //   };
+    const postNewPlant = (e) => {
+        e.preventDefault();
+        // axiosWithAuth()
+        //   .post('', inputs)
+        //   .then((res) => {
+        //     console.log(res);
+        //     history.push('');
+        //     setInputs(initialFakePlantData);
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //   });
+        setUsersPlants({
+            ...usersPlants,
+            nickname: inputs.nickname,
+            species: inputs.species,
+            h2OFrequency: inputs.h2OFrequency
+        });
+        setInputs({
+            ...inputs,
+            nickname: '',
+            species: '',
+            h2OFrequency: ''
+        });
+        history.push('/')
+    };
 
     return (
-        <div>
+        <div className="add-plant">
             <h1>ADD A NEW PLANT</h1>
-            <form onSubmit={null}>
+            <form className="add-form" onSubmit={null}>
                 {/* <label>
                 Plant Id
                 <input
@@ -51,7 +63,7 @@ export default function AddPlant() {
                 />
                 </label>  */}
                 <label>
-                    Nickname
+                    Nickname:
                     <input
                         type="text"
                         name="nickname"
@@ -60,15 +72,20 @@ export default function AddPlant() {
                     />
                 </label>
                 <label>
-                    Species
+                    Species:
                     <input
                         type="text"
                         name="species"
                         value={inputs.species}
                         onChange={handleChange}
                     />
+
+                </label> 
+                {/* <label>
+
                 </label>
                 <label>
+
                     Owner
                     <input
                         type="integer"
@@ -76,22 +93,25 @@ export default function AddPlant() {
                         value={inputs.owner}
                         onChange={handleChange}
                     />
-                </label>
+
+                </label>  */
+
                 <label>
-                    H20 Frequency
+                    H2O Frequency:
                     <input
                         type="integer"
                         name="h20Frequency"
-                        value={inputs.h20Frequency}
+                        value={inputs.h2OFrequency}
                         onChange={handleChange}
                     />
-                </label>
+                </label>    
+                
+                <button>Add Plant</button>
 
                 <button>Add Class</button>
+
             </form>
 
         </div>
     )
 }
-
-

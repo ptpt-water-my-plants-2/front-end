@@ -9,6 +9,7 @@ import { useHistory } from "react-router";
 import { Redirect } from "react-router-dom";
 import { GlobalPropsContext } from '../GlobalPropsContext'
 import axios from 'axios';
+import { loginSchema } from "../../validation/formSchemas";
 
 
 // Initial log in form values
@@ -19,8 +20,17 @@ export default function Login({ getUserInfo, getUsersPlants }) {
     const [loginFormValues, setLogInFormValues] = useState(initialLogInFormValues);
     const { isLoggedIn, setIsLoggedIn, user_id, setUserId } = useContext(GlobalPropsContext);
     const [loginError, setLoginError] = useState(false);
+    const [disabled, setDisabled] = useState(true);
 
     let history = useHistory();
+
+
+    // useEffect(() => {
+    //     axios.post('https://water-my-plants-app2.herokuapp.com/api/auth/login', loginFormValues)
+    //         .then(res => console.log(res))
+    //         .catch(err => console.log(err));
+    // }, []);
+
 
     const onChange = (e) => {
         setLogInFormValues({
@@ -28,6 +38,15 @@ export default function Login({ getUserInfo, getUsersPlants }) {
             [e.target.name]: e.target.value
         })
     }
+
+    
+    console.log(loginFormValues);
+    
+    const signUpHandler = e => {
+        e.preventDefault();
+        history.push('/signup');
+    }
+    
 
     const loginSubmitHandler = (e) => {
         e.preventDefault();
@@ -52,6 +71,14 @@ export default function Login({ getUserInfo, getUsersPlants }) {
             })
     }
 
+
+    useEffect(() => {
+        loginSchema
+        .isValid(loginFormValues)
+        .then(isSchemaValid => {
+            setDisabled(!isSchemaValid)
+        })
+    })
 
 
 
@@ -79,9 +106,12 @@ export default function Login({ getUserInfo, getUsersPlants }) {
                     value={loginFormValues.password}
                 />
                 <button type="submit">
-                    LogIn
+                    Log In
                 </button>
             </form>
+            <button onClick={signUpHandler}>
+                Sign Up
+            </button>
         </div>
     )
 }
