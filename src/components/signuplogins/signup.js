@@ -2,10 +2,11 @@
 // a unique `username`, a valid mobile `phoneNumber` and a `password`.
 
 import "../../App.css"
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router";
 //import { GlobalPropsContext } from '../GlobalPropsContext';
-
+import { signupSchema } from "../../validation/formSchemas";
+import * as yup from 'yup';
 
 const initialsignUpFormValues = {
     firstName: '',
@@ -37,31 +38,30 @@ export default function Signup() {
 
     // controls the form input changes via state
     const onChange = (e) => {
+        const { name, value } = e.target;
+
+        //checks validation with yup, run form errors
+        yup.reach(signupSchema, name)
+            .validate(value)
+            .then(() => {
+                setSignUpFormValueErrors({ ...signUpFormValueErrors, [name]: "" })
+            })
+            .catch(err => {
+                setSignUpFormValueErrors({ ...signUpFormValueErrors, [name]: err.message })
+            })
+
         setSignUpFormValues({
-            ...signUpFormValues, [e.target.name]: e.target.value
+            ...signUpFormValues, [name]: value
         })
     }
 
     // adjusts `disabled` when `formValues` change
-    //   useEffect(() => {
-    //     schema.isValid(loginFormValues)
-    //         .then(isSchemaValid => {
-    //             setDisabled(!isSchemaValid) //disable the submt button if not valid
-    //         })
-    // }, [loginFormValues])
-
-
-    //checks validation with yup, run form errors
-    // yup.reach(schema, name)
-    //   .validate(value)
-    //   .then(() => {
-    //     setSignUpFormErrors({ ...signUpformErrors, [name]: "" })
-    //   })
-    //   .catch(err => {
-    //     setSignUpFormErrors({ ...signUpformErrors, [name]: err.message })
-    //   })
-
-
+    useEffect(() => {
+        signupSchema.isValid(signUpFormValues)
+            .then(isSchemaValid => {
+                setDisabled(!isSchemaValid) //disable the submt button if not valid
+            })
+    }, [signUpFormValues])
 
     return (
         <div>
