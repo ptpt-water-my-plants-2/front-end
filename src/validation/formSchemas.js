@@ -21,7 +21,6 @@ export const signupSchema = Yup.object().shape({
         .required("Username is needed"),
     phoneNumber: Yup
         .string()
-        .phoneNumber("Must be a valid phone number")
         .required("Phone number is needed")
         .min(10, 'Must have 10 numbers'),
     password: Yup
@@ -37,7 +36,6 @@ export const editUserSchema = Yup.object().shape({
         .min(4, "Password must be at least 4 characters long"),
     phoneNumber: Yup
         .string()
-        .phoneNumber("Must be a valid phone number")
         .required("Phone number is needed")
         .min(10, 'Must have 10 numbers')
 })
