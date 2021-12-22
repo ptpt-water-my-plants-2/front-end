@@ -61,23 +61,10 @@ export default function AddPlant() {
                 });
             
                 history.push('/');
-           })
-           .catch((err) => {
-            console.log(err);
-          });
-        // setUsersPlants({
-        //     ...usersPlants,
-        //     nickname: inputs.nickname,
-        //     species: inputs.species,
-        //     h2OFrequency: inputs.h2OFrequency
-        // });
-        // setInputs({
-        //     ...inputs,
-        //     nickname: '',
-        //     species: '',
-        //     h2OFrequency: ''
-        // });
-       
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     return (
