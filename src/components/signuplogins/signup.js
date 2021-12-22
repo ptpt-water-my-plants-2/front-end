@@ -12,8 +12,7 @@ const initialsignUpFormValues = {
     lastName: '',
     username: '',
     phoneNumber: '',
-    password: '',
-    retypePassword: '',
+    password: ''
 }
 
 const initialSignUpFormErrors = {
@@ -22,7 +21,6 @@ const initialSignUpFormErrors = {
     username: '',
     phoneNumber: '',
     password: '',
-    retypePassword: '',
 }
 
 // submit is disabled until inputs validated
@@ -116,7 +114,7 @@ export default function Signup() {
                         onChange={onChange}
                         value={signUpFormValues.password}
                     />
-                    <input
+                    {/* <input
                         placeholder="re-type password"
                         name="retypePassword"
                         label="retypePassword"
@@ -124,7 +122,7 @@ export default function Signup() {
                         id="password"
                         onChange={onChange}
                         value={signUpFormValues.retypePassword}
-                    />
+                    /> */}
                     <button type="submit" disabled={disabled}>
                         Sign Up!
                     </button>
