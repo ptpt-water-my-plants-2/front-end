@@ -6,15 +6,15 @@ import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router";
 import axios from "axios";
 //import { GlobalPropsContext } from '../GlobalPropsContext';
-
+import { signupSchema } from "../../validation/formSchemas";
+import * as yup from 'yup';
 
 const initialsignUpFormValues = {
     firstName: '',
     lastName: '',
     username: '',
     phoneNumber: '',
-    password: '',
-    retypePassword: '',
+    password: ''
 }
 
 const initialSignUpFormErrors = {
@@ -23,7 +23,6 @@ const initialSignUpFormErrors = {
     username: '',
     phoneNumber: '',
     password: '',
-    retypePassword: '',
 }
 
 // submit is disabled until inputs validated
@@ -41,13 +40,35 @@ export default function Signup() {
 
     // controls the form input changes via state
     const onChange = (e) => {
+        const { name, value } = e.target;
+
+        //checks validation with yup, run form errors
+        yup.reach(signupSchema, name)
+            .validate(value)
+            .then(() => {
+                setSignUpFormValueErrors({ ...signUpFormValueErrors, [name]: "" })
+            })
+            .catch(err => {
+                setSignUpFormValueErrors({ ...signUpFormValueErrors, [name]: err.message })
+            })
+
+
         console.log(signUpFormValues)
+
         setSignUpFormValues({
-            ...signUpFormValues, [e.target.name]: e.target.value
+            ...signUpFormValues, [name]: value
         })
     }
 
     // adjusts `disabled` when `formValues` change
+
+    useEffect(() => {
+        signupSchema.isValid(signUpFormValues)
+            .then(isSchemaValid => {
+                setDisabled(!isSchemaValid) //disable the submt button if not valid
+            })
+    }, [signUpFormValues])
+
     //   useEffect(() => {
     //     schema.isValid(loginFormValues)
     //         .then(isSchemaValid => {
@@ -141,7 +162,7 @@ export default function Signup() {
                         onChange={onChange}
                         value={signUpFormValues.password}
                     />
-                    <input
+                    {/* <input
                         placeholder="re-type password"
                         name="retypePassword"
                         label="retypePassword"
@@ -149,7 +170,7 @@ export default function Signup() {
                         id="password"
                         onChange={onChange}
                         value={signUpFormValues.retypePassword}
-                    />
+                    /> */}
                     <button type="submit" disabled={disabled}>
                         Sign Up!
                     </button>
