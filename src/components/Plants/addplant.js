@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GlobalPropsContext } from '../GlobalPropsContext';
-// import { initialFakePlantData } from '../App';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 export default function AddPlant() {
     const [inputs, setInputs] = useState({
@@ -24,35 +24,47 @@ export default function AddPlant() {
 
     const postNewPlant = (e) => {
         e.preventDefault();
-        // axiosWithAuth()
-        //   .post('', inputs)
-        //   .then((res) => {
-        //     console.log(res);
-        //     history.push('');
-        //     setInputs(initialFakePlantData);
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
-        setUsersPlants({
-            ...usersPlants,
-            nickname: inputs.nickname,
-            species: inputs.species,
-            h2OFrequency: inputs.h2OFrequency
-        });
-        setInputs({
-            ...inputs,
-            nickname: '',
-            species: '',
-            h2OFrequency: ''
-        });
-        history.push('/')
+         axiosWithAuth()
+           .post('https://water-my-plants-app2.herokuapp.com/api/plants/', inputs)
+           .then((res) => {
+            console.log(res);
+            setUsersPlants({
+                ...usersPlants,
+                nickname: inputs.nickname,
+                species: inputs.species,
+                h2OFrequency: inputs.h2OFrequency
+            });
+            setInputs({
+                ...inputs,
+                nickname: '',
+                species: '',
+                h2OFrequency: ''
+            });
+            history.push('/');
+           
+           })
+           .catch((err) => {
+            console.log(err);
+          });
+        // setUsersPlants({
+        //     ...usersPlants,
+        //     nickname: inputs.nickname,
+        //     species: inputs.species,
+        //     h2OFrequency: inputs.h2OFrequency
+        // });
+        // setInputs({
+        //     ...inputs,
+        //     nickname: '',
+        //     species: '',
+        //     h2OFrequency: ''
+        // });
+       
     };
 
     return (
         <div className="add-plant">
             <h1>ADD A NEW PLANT</h1>
-            <form className="add-form" onSubmit={null}>
+            <form className="add-form" onSubmit={postNewPlant}>
                 {/* <label>
                 Plant Id
                 <input
@@ -100,7 +112,7 @@ export default function AddPlant() {
                     H2O Frequency:
                     <input
                         type="integer"
-                        name="h20Frequency"
+                        name="h2OFrequency"
                         value={inputs.h2OFrequency}
                         onChange={handleChange}
                     />

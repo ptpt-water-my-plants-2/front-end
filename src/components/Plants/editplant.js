@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-//import { axiosWithAuth } from '../utils/axiosWithAuth';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 import { GlobalPropsContext } from '../GlobalPropsContext';
 
 export default function EditPlant() {
@@ -16,7 +16,7 @@ export default function EditPlant() {
 
     // useEffect(() => {
     //     axiosWithAuth()
-    //       .get(``)
+    //       .get(`/https://water-my-plants-app2.herokuapp.com/api/plants/`)
     //       .then((res) => {
     //         let newArr = res.data.filter((cls) => cls.id === parseInt(params.id));
     //         setInputs(newArr[0]);
@@ -31,22 +31,22 @@ export default function EditPlant() {
 
       const editplant = (e) => {
         e.preventDefault();
-        // axiosWithAuth()
-        //   .put('', inputs)
-        //   .then((res) => {
-        //     console.log(res);
-        //     history.push('');
-        //     setInputs(initialFakePlantData);
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
+         axiosWithAuth()
+          .put('/https://water-my-plants-app2.herokuapp.com/api/plants/${params.id}', inputs)
+           .then((res) => {
+             console.log(res);
+             history.push('/');
+             setInputs('');
+           })
+           .catch((err) => {
+             console.log(err);
+           });
       };
 
     return (
         <div>
             <h1>EDIT PLANT</h1>
-            <form onSubmit={null}>
+            <form onSubmit={editplant}>
             
                 {/* <label>
                 Plant Id
@@ -88,7 +88,7 @@ export default function EditPlant() {
                 H2O Frequency
                 <input
                     type="integer"
-                    name="h20Frequency"
+                    name="h2OFrequency"
                     value={inputs.h2OFrequency}
                     onChange={handleChange}
                 />
