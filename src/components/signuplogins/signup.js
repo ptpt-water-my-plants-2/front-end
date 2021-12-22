@@ -4,6 +4,7 @@
 import "../../App.css"
 import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router";
+import axios from "axios";
 //import { GlobalPropsContext } from '../GlobalPropsContext';
 import { signupSchema } from "../../validation/formSchemas";
 import * as yup from 'yup';
@@ -25,7 +26,8 @@ const initialSignUpFormErrors = {
 }
 
 // submit is disabled until inputs validated
-const initialDisabled = true;
+// this should be set to true once validation is set up
+const initialDisabled = false;
 
 
 export default function Signup() {
@@ -50,12 +52,16 @@ export default function Signup() {
                 setSignUpFormValueErrors({ ...signUpFormValueErrors, [name]: err.message })
             })
 
+
+        console.log(signUpFormValues)
+
         setSignUpFormValues({
             ...signUpFormValues, [name]: value
         })
     }
 
     // adjusts `disabled` when `formValues` change
+
     useEffect(() => {
         signupSchema.isValid(signUpFormValues)
             .then(isSchemaValid => {
@@ -63,10 +69,52 @@ export default function Signup() {
             })
     }, [signUpFormValues])
 
+    //   useEffect(() => {
+    //     schema.isValid(loginFormValues)
+    //         .then(isSchemaValid => {
+    //             setDisabled(!isSchemaValid) //disable the submt button if not valid
+    //         })
+    // }, [loginFormValues])
+
+
+    //checks validation with yup, run form errors
+    // yup.reach(schema, name)
+    //   .validate(value)
+    //   .then(() => {
+    //     setSignUpFormErrors({ ...signUpformErrors, [name]: "" })
+    //   })
+    //   .catch(err => {
+    //     setSignUpFormErrors({ ...signUpformErrors, [name]: err.message })
+    //   })
+
+    // possibly trim these if yu haven't elsewhere
+    let registerWithTheseFormValues = {
+        firstName: signUpFormValues.firstName,
+        lastName: signUpFormValues.lastName,
+        username: signUpFormValues.username,
+        phoneNumber: signUpFormValues.phoneNumber,
+        password: `${(signUpFormValues.password === signUpFormValues.retypePassword) ? signUpFormValues.password : ""}`
+    }
+
+    const registerNewUser = (e) => {
+        e.preventDefault();
+        console.log("submit clicked for register user")
+        axios.post('https://water-my-plants-app2.herokuapp.com/api/auth/register', registerWithTheseFormValues)
+            .then((res) => {
+                console.log(res, "res from registering new user")
+                alert(`Welcome ${registerWithTheseFormValues.firstName}! Please login to begin your plant care!`)
+                history.push("/login")
+            })
+            .catch((err) => {
+                console.log(err, "error in registering new user")
+            })
+    }
+
+
     return (
         <div>
             <div>
-                <form onSubmit="" className="form">
+                <form onSubmit={registerNewUser} className="form">
                     {<h1>Sign Up</h1>}
                     <input
                         placeholder="First Name"
@@ -97,13 +145,13 @@ export default function Signup() {
                     />
 
                     <input
-                        placeholder="youremail@email.com"
-                        name="email"
-                        label="email"
-                        type="email"
-                        id="email"
+                        placeholder="8675309"
+                        name="phoneNumber"
+                        label="phoneNumber"
+                        type="phoneNumber"
+                        id="phoneNumber"
                         onChange={onChange}
-                        value={signUpFormValues.email}
+                        value={signUpFormValues.phoneNumber}
                     />
                     <input
                         placeholder="password"
