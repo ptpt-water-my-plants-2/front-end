@@ -6,6 +6,7 @@
 //and can login with the registered credentials.
 import { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router";
+import { Redirect } from "react-router-dom";
 import { GlobalPropsContext } from '../GlobalPropsContext'
 import axios from 'axios';
 import { loginSchema } from "../../validation/formSchemas";
@@ -15,13 +16,14 @@ import { loginSchema } from "../../validation/formSchemas";
 const initialLogInFormValues = { username: "", password: "" };
 
 
-export default function Login() {
+export default function Login({ getUserInfo, getUsersPlants }) {
     const [loginFormValues, setLogInFormValues] = useState(initialLogInFormValues);
-    const { user, setIsLoggedIn } = useContext(GlobalPropsContext);
+    const { isLoggedIn, setIsLoggedIn, user_id, setUserId } = useContext(GlobalPropsContext);
     const [loginError, setLoginError] = useState(false);
     const [disabled, setDisabled] = useState(true);
 
     let history = useHistory();
+
 
     // useEffect(() => {
     //     axios.post('https://water-my-plants-app2.herokuapp.com/api/auth/login', loginFormValues)
@@ -29,12 +31,14 @@ export default function Login() {
     //         .catch(err => console.log(err));
     // }, []);
 
+
     const onChange = (e) => {
         setLogInFormValues({
-            ...loginFormValues, 
+            ...loginFormValues,
             [e.target.name]: e.target.value
         })
     }
+
     
     console.log(loginFormValues);
     
@@ -43,22 +47,28 @@ export default function Login() {
         history.push('/signup');
     }
     
+
     const loginSubmitHandler = (e) => {
         e.preventDefault();
-        // setIsLoading(true);
-        // console.log(isLoading);
-        // if (user === true) {
-        //     if (loginFormValues.username !== "lambda" && loginFormValues.password !== "school") {
-        //         setLoginError(true);
-        //     } else {
-        //         setLoginError(false);
-        //         setIsLoggedIn(true);
-        //         history.push("/")
-        //     }
-        // }
         axios.post('https://water-my-plants-app2.herokuapp.com/api/auth/login', loginFormValues)
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
+            .then((res => {
+                localStorage.setItem('token', res.data.token);
+                console.log(res, "res")
+                if (localStorage.getItem('token')) {
+                    setIsLoggedIn(true)
+                    setUserId(res.data.user_id)
+                    getUserInfo(res.data.user_id).then((res) => {
+                        console.log(res, "userInfo from login")
+                    });
+                    getUsersPlants(res.data.user_id).then((res) => {
+                        history.push("/")
+                    })
+                }
+            }))
+            .catch(err => {
+                console.log(err);
+                <Redirect to="/login" />
+            })
     }
 
 
@@ -69,6 +79,8 @@ export default function Login() {
             setDisabled(!isSchemaValid)
         })
     })
+
+
 
 
     return (

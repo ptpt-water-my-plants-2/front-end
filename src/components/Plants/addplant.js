@@ -14,12 +14,12 @@ export default function AddPlant() {
 
     const handleChange = (e) => {
         // setUsersPlants({ ...usersPlants, [e.target.name]: e.target.value });
-        setInputs({ 
-            ...inputs, 
-            [e.target.name]: e.target.value 
+        setInputs({
+            ...inputs,
+            [e.target.name]: e.target.value
         })
     };
-    
+
     console.log(inputs);
 
     const postNewPlant = (e) => {
@@ -70,7 +70,7 @@ export default function AddPlant() {
                         value={inputs.nickname}
                         onChange={handleChange}
                     />
-                </label> 
+                </label>
                 <label>
                     Species:
                     <input
@@ -79,8 +79,13 @@ export default function AddPlant() {
                         value={inputs.species}
                         onChange={handleChange}
                     />
+
                 </label> 
                 {/* <label>
+
+                </label>
+                <label>
+
                     Owner
                     <input
                         type="integer"
@@ -88,7 +93,9 @@ export default function AddPlant() {
                         value={inputs.owner}
                         onChange={handleChange}
                     />
-                </label>  */}
+
+                </label>  */
+
                 <label>
                     H2O Frequency:
                     <input
@@ -100,8 +107,11 @@ export default function AddPlant() {
                 </label>    
                 
                 <button>Add Plant</button>
+
+                <button>Add Class</button>
+
             </form>
-            
+
         </div>
     )
 }
