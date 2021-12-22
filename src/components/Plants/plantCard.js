@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 //import { GlobalPropsContext } from "../GlobalPropsContext";
 
 
-export default function MyPlants(props) {
+export default function PlantCard(props) {
 
     return (
         <div className="plantCard">
