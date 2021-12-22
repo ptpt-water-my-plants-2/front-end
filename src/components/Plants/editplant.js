@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { axiosWithAuth } from '../utils/axiosWithAuth';
+import axiosWithAuth from '../utils/axiosWithAuth';
 import { GlobalPropsContext } from '../GlobalPropsContext';
 
 export default function EditPlant() {

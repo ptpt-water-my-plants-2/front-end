@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GlobalPropsContext } from '../GlobalPropsContext';
-import { axiosWithAuth } from '../utils/axiosWithAuth';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 export default function AddPlant() {
     const [inputs, setInputs] = useState({
