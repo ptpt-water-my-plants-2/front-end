@@ -80,11 +80,11 @@ function App() {
 
             <Route exact path="/logout"><Logout setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} setUserId={setUserId} /></Route>
 
-            <Route exact path="/addnewplant"> <AddPlant /></Route>
+            <PrivateRoute exact path="/addnewplant"><AddPlant /></PrivateRoute>
             
-            <Route path="/edituserprofile"> <EditUserProfile /></Route>
+            <PrivateRoute path="/edituserprofile"><EditUserProfile /></PrivateRoute>
 
-            <Route path="/details/:id"> <PlantDetails /></Route>
+            <PrivateRoute path="/details/:id"><PlantDetails /></PrivateRoute>
 
             <PrivateRoute exact path="/" component={Home} />
           </Switch>
