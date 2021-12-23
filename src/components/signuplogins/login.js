@@ -19,7 +19,7 @@ const initialLogInFormErrors = { username: "", password: "" };
 export default function Login({ getUserInfo, getUsersPlants }) {
     const [loginFormValues, setLogInFormValues] = useState(initialLogInFormValues);
     const { isLoggedIn, setIsLoggedIn, user_id, setUserId } = useContext(GlobalPropsContext);
-    const [loginErrors, setLoginErrors] = useState(false);
+    const [loginErrors, setLoginErrors] = useState(initialLogInFormErrors);
     // const [disabled, setDisabled] = useState(true);
 
     let history = useHistory();
