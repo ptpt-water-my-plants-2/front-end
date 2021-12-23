@@ -26,6 +26,8 @@ function App() {
 
   console.log(user_id, "user_id")
   console.log(isLoggedIn, "isLoggedIn")
+  console.log(usersPlants, "usersPlants")
+  console.log(usersPlants, "usersPlants")
 
   // BUILD THIS TO KEEP USER LOGGED IN by token when they don't click logout
   useEffect(() => {
@@ -75,7 +77,7 @@ function App() {
 
     <Router>
       <div className="App">
-        <GlobalPropsContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser, user_id, setUserId, usersPlants, IsFetchingUsersPlants }}>
+        <GlobalPropsContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser, user_id, setUserId, usersPlants, IsFetchingUsersPlants, getUsersPlants }}>
 
           <NavBar />
           <Switch>

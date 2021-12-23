@@ -18,7 +18,7 @@ export default function AddPlant() {
         h2OFrequency: ''
     })
     const [disabled, setDisabled] = useState(true);
-    const { usersPlants, setUsersPlants } = useContext(GlobalPropsContext);
+    const { usersPlants, setUsersPlants, user_id, getUsersPlants } = useContext(GlobalPropsContext);
     const history = useHistory();
 
     const handleChange = (e) => {
@@ -32,7 +32,7 @@ export default function AddPlant() {
             .catch(err => {
                 setInputErrors({ ...inputErrors, [name]: err.message })
             });
-        
+
         setInputs({
             ...inputs,
             [name]: value
@@ -49,25 +49,27 @@ export default function AddPlant() {
             })
     }, [inputs]);
 
+
+    const updatesBeingSent = {
+
+        nickname: inputs.nickname,
+        species: inputs.species,
+        h2OFrequency: inputs.h2OFrequency,
+        owner: user_id
+    }
+
     const postNewPlant = (e) => {
         e.preventDefault();
         axiosWithAuth()
-           .post('https://water-my-plants-app2.herokuapp.com/api/plants/', inputs)
-           .then((res) => {
+            .post('https://water-my-plants-app2.herokuapp.com/api/plants/', updatesBeingSent)
+            .then((res) => {
                 console.log(res);
-                setUsersPlants({
-                    ...usersPlants,
-                    nickname: inputs.nickname,
-                    species: inputs.species,
-                    h2OFrequency: inputs.h2OFrequency
-                });
                 setInputs({
-                    ...inputs,
                     nickname: '',
                     species: '',
                     h2OFrequency: ''
                 });
-
+                getUsersPlants(user_id)
                 history.push('/');
             })
             .catch((err) => {
@@ -79,15 +81,7 @@ export default function AddPlant() {
         <div className="add-plant">
             <h1>ADD A NEW PLANT</h1>
             <form className="add-form otherForm" onSubmit={postNewPlant}>
-                {/* <label>
-                Plant Id
-                <input
-                    type="integer"
-                    name="plantId"
-                    value={inputs.plantId}
-                    onChange={handleChange}
-                />
-                </label>  */}
+
                 <label>
                     Nickname:
                     <input
@@ -107,20 +101,6 @@ export default function AddPlant() {
                     />
 
                 </label>
-                {/* <label>
-
-                </label>
-                <label>
-
-                    Owner
-                    <input
-                        type="integer"
-                        name="owner"
-                        value={inputs.owner}
-                        onChange={handleChange}
-                    />
-
-                </label>  */}
 
                 <label>
                     H2O Frequency:
