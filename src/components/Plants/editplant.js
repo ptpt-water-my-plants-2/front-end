@@ -1,12 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "../../App.css"
 import { useHistory, useParams } from 'react-router-dom';
 import axiosWithAuth from '../utils/axiosWithAuth';
 import { GlobalPropsContext } from '../GlobalPropsContext';
 
 export default function EditPlant() {
-    const { usersPlants, user_id, user } = useContext(GlobalPropsContext);
-
+    const { usersPlants, user_id, user, getUsersPlants } = useContext(GlobalPropsContext);
+    const [currentPlant, setCurrentPlant] = useState(null)
+    const params = useParams();
     const history = useHistory();
     const [inputs, setInputs] = useState({
         nickname: '',
@@ -20,50 +21,71 @@ export default function EditPlant() {
     };
 
     // GET PLANT BY ID POST REQUEST - (to display current plant information)
+    const getPlantByID = async () => {
+        axiosWithAuth()
+            .get(`https://water-my-plants-app2.herokuapp.com/api/plants/${params.id}`)
+            .then((res) => {
+                console.log(res);
+                setCurrentPlant(res.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+    console.log(currentPlant, "current Plant")
 
+    useEffect(() => {
+        getPlantByID()
+    }, [params.id])
 
 
     // Edit Plant PUT REQUEST
     const editplant = (e) => {
         e.preventDefault();
-        // axiosWithAuth()
-        //     .put(`/https://water-my-plants-app2.herokuapp.com/api/plants/${usersPlants.plantsId}`, inputs)
-        //     .then((res) => {
-        //         console.log(res);
-        //         history.push('/');
-        //         setInputs('');
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
+        axiosWithAuth()
+            .put(`/https://water-my-plants-app2.herokuapp.com/api/plants/${usersPlants.plantsId}`, inputs)
+            .then((res) => {
+                console.log(res);
+                history.push('/');
+                setInputs('');
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
+
+    // DELETE PLANT BY ID
+
+    const deletePlantById = () => {
+
+        axiosWithAuth()
+            .delete(`https://water-my-plants-app2.herokuapp.com/api/plants/${params.id}`)
+            .then((res) => {
+                console.log(res, "delete this plant");
+                getUsersPlants(user_id)
+                history.push('/');
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+    }
 
     return (
         <div>
-            {/* <h1>{usersPlants.nickname}</h1> */}
+            <h1>{user.username}'s plant: </h1>
             <div className='user-info'>
                 <div>
-                    plant info will go here
-                    {/* <p>Nickname: {usersPlants.nickname}</p>
-                    <p>Species: {usersPlants.species}</p>
-                    <p>H2O Frequency: {usersPlants.h2OFrequency}</p>
-                    <p>Users Plant Id: {usersPlants.plantId}</p>
-                    <p>Plant Owner: {usersPlants.plantId}</p> */}
+                    <p>Nickname: {(currentPlant) && currentPlant.nickname}</p>
+                    <p>Species: {(currentPlant) && currentPlant.species}</p>
+                    <p>H2O Frequency: {(currentPlant) && currentPlant.h2OFrequency}</p>
+                    <p>Plant Owner: {(currentPlant) && user.username}</p>
                 </div>
             </div>
             <div className='edit-form'>
                 <h2>EDIT PLANT</h2>
                 <form onSubmit={editplant} className='otherForm'>
 
-                    {/* <label>
-                Plant Id
-                <input
-                    type="integer"
-                    name="plantId"
-                    value={inputs.plantId}
-                    onChange={handleChange}
-                />
-                </label>  */}
                     <label>
                         {/* Nickname */}
                         <input
@@ -84,15 +106,7 @@ export default function EditPlant() {
                             onChange={handleChange}
                         />
                     </label>
-                    {/* <label>
-                Owner
-                <input
-                    type="integer"
-                    name="owner"
-                    value={inputs.owner}
-                    onChange={handleChange}
-                />
-                </label>  */}
+
                     <label>
                         {/* H2O Frequency */}
                         <input
@@ -106,6 +120,7 @@ export default function EditPlant() {
 
                     <button className='editUserButton'>Submit Plant Updates</button>
                 </form>
+                <button onClick={() => deletePlantById()} className='deletePlantButton'>Delete Plant</button>
             </div>
         </div>
     )
