@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GlobalPropsContext } from '../GlobalPropsContext';
 import { addPlantSchema } from '../../validation/formSchemas';
@@ -16,6 +16,7 @@ export default function AddPlant() {
         species: '',
         h2OFrequency: ''
     })
+    const [disabled, setDisabled] = useState(true);
     const { usersPlants, setUsersPlants } = useContext(GlobalPropsContext);
     const history = useHistory();
 
@@ -38,6 +39,14 @@ export default function AddPlant() {
     };
 
     console.log(inputs);
+
+    useEffect(() => {
+        addPlantSchema
+            .isValid(inputs)
+            .then(isSchemaValid => {
+                setDisabled(!isSchemaValid)
+            })
+    }, [inputs]);
 
     const postNewPlant = (e) => {
         e.preventDefault();
@@ -124,7 +133,7 @@ export default function AddPlant() {
                     />
                 </label>
 
-                <button>Add Plant</button>
+                <button type='submit' disabled={disabled}>Add Plant</button>
             </form>
             <div className='errors'>
                 <p>{inputErrors.nickname}</p>
