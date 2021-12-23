@@ -16,7 +16,6 @@ export default function EditPlant() {
     });
 
     const handleChange = (e) => {
-        // setUsersPlants({ ...usersPlants, [e.target.name]: e.target.value });
         setInputs({ ...inputs, [e.target.name]: e.target.value });
     };
 
@@ -32,22 +31,32 @@ export default function EditPlant() {
                 console.log(err);
             });
     };
-    console.log(currentPlant, "current Plant")
 
     useEffect(() => {
         getPlantByID()
     }, [params.id])
 
+    const updateValues = {
+        nickname: inputs.nickname,
+        species: inputs.species,
+        h2OFrequency: inputs.h2OFrequency,
+        owner: user_id
+    };
 
     // Edit Plant PUT REQUEST
     const editplant = (e) => {
         e.preventDefault();
         axiosWithAuth()
-            .put(`/https://water-my-plants-app2.herokuapp.com/api/plants/${usersPlants.plantsId}`, inputs)
+            .put(`https://water-my-plants-app2.herokuapp.com/api/plants/${params.id}`, updateValues)
             .then((res) => {
-                console.log(res);
-                history.push('/');
-                setInputs('');
+                getUsersPlants(user_id);
+                getPlantByID(params.id);
+                setInputs({
+                    nickname: '',
+                    species: '',
+                    h2OFrequency: ''
+                });
+                // history.push('/');
             })
             .catch((err) => {
                 console.log(err);
@@ -57,7 +66,6 @@ export default function EditPlant() {
     // DELETE PLANT BY ID
 
     const deletePlantById = () => {
-
         axiosWithAuth()
             .delete(`https://water-my-plants-app2.herokuapp.com/api/plants/${params.id}`)
             .then((res) => {
@@ -68,7 +76,6 @@ export default function EditPlant() {
             .catch((err) => {
                 console.log(err);
             });
-
     }
 
     return (

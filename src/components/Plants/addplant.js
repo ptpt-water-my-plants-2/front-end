@@ -39,8 +39,6 @@ export default function AddPlant() {
         });
     };
 
-    console.log(inputs);
-
     useEffect(() => {
         addPlantSchema
             .isValid(inputs)
@@ -49,9 +47,7 @@ export default function AddPlant() {
             })
     }, [inputs]);
 
-
     const updatesBeingSent = {
-
         nickname: inputs.nickname,
         species: inputs.species,
         h2OFrequency: inputs.h2OFrequency,
