@@ -11,7 +11,7 @@ export default function PlantCard(props) {
             {/* <img src={eachPlant.image} alt="coolImage" /> */}
             <h4>Species: {props.eachPlant.species}</h4>
             <h4>Water Every {props.eachPlant.h20Frequency} Days</h4>
-            <Link to={`/details/${props.eachPlant.plantId}`}> <button className='detailsButton'>See Plant Details</button> </Link>
+            <Link to={`/details/${props.eachPlant.plantId}`}> <button className='detailsButton'>Edit Plant</button> </Link>
         </div>
     )
 }

@@ -41,23 +41,22 @@ export default function EditUserProfile() {
 
     return (
         <div>
-            <h1>USER PROFILE</h1>
-            <p>Show all User's info and allow updating of password and phone number</p>
+            <h1>{user.username}'s PROFILE</h1>
             <div className='user-info'>
                 <div>
                     <p>Username: {user.username}</p>
                     <p>Phone Number: {user.phoneNumber}</p>
+                    <p>User Id: {user.user_id}</p>
                 </div>
             </div>
-            {/* <div className='edit-button'>
-                <button>Edit</button>
-            </div> */}
+
             <div className='edit-form'>
-                <h2>Edit Info</h2>
-                <form onSubmit={editInfo}>
+                <h2>Update Your User Information:</h2>
+                <form onSubmit={editInfo} className='otherForm'>
                     <label>
-                        Password:
+                        {/* <p>Password:</p> */}
                         <input
+                            placeholder="new password"
                             type='password'
                             name='password'
                             onChange={handleChanges}
@@ -65,15 +64,16 @@ export default function EditUserProfile() {
                         />
                     </label>
                     <label>
-                        Phone Number:
+                        {/* <p> Phone Number: </p> */}
                         <input
+                            placeholder="new phone number"
                             type='text'
                             name='phoneNumber'
                             onChange={handleChanges}
                             value={userValues.phoneNumber}
                         />
                     </label>
-                    <button>Submit</button>
+                    <button className="editUserButton">Submit</button>
                 </form>
             </div>
         </div>

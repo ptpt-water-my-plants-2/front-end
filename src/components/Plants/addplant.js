@@ -1,7 +1,9 @@
 import React, { useState, useContext } from 'react';
+import '../../App.css'
 import { useHistory } from 'react-router-dom';
 import { GlobalPropsContext } from '../GlobalPropsContext';
-import { axiosWithAuth } from '../utils/axiosWithAuth';
+import axiosWithAuth from '../utils/axiosWithAuth';
+
 
 export default function AddPlant() {
     const [inputs, setInputs] = useState({
@@ -24,28 +26,28 @@ export default function AddPlant() {
 
     const postNewPlant = (e) => {
         e.preventDefault();
-         axiosWithAuth()
-           .post('https://water-my-plants-app2.herokuapp.com/api/plants/', inputs)
-           .then((res) => {
-            console.log(res);
-            setUsersPlants({
-                ...usersPlants,
-                nickname: inputs.nickname,
-                species: inputs.species,
-                h2OFrequency: inputs.h2OFrequency
+        axiosWithAuth()
+            .post('https://water-my-plants-app2.herokuapp.com/api/plants/', inputs)
+            .then((res) => {
+                console.log(res);
+                setUsersPlants({
+                    ...usersPlants,
+                    nickname: inputs.nickname,
+                    species: inputs.species,
+                    h2OFrequency: inputs.h2OFrequency
+                });
+                setInputs({
+                    ...inputs,
+                    nickname: '',
+                    species: '',
+                    h2OFrequency: ''
+                });
+                history.push('/');
+
+            })
+            .catch((err) => {
+                console.log(err);
             });
-            setInputs({
-                ...inputs,
-                nickname: '',
-                species: '',
-                h2OFrequency: ''
-            });
-            history.push('/');
-           
-           })
-           .catch((err) => {
-            console.log(err);
-          });
         // setUsersPlants({
         //     ...usersPlants,
         //     nickname: inputs.nickname,
@@ -58,13 +60,13 @@ export default function AddPlant() {
         //     species: '',
         //     h2OFrequency: ''
         // });
-       
+
     };
 
     return (
         <div className="add-plant">
             <h1>ADD A NEW PLANT</h1>
-            <form className="add-form" onSubmit={postNewPlant}>
+            <form className="add-form otherForm" onSubmit={postNewPlant}>
                 {/* <label>
                 Plant Id
                 <input
