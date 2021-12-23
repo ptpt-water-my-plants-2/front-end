@@ -18,10 +18,10 @@ const initialLogInFormErrors = { username: "", password: "" };
 
 export default function Login({ getUserInfo, getUsersPlants }) {
     const [loginFormValues, setLogInFormValues] = useState(initialLogInFormValues);
-    const { isLoggedIn, setIsLoggedIn, user_id, setUserId } = useContext(GlobalPropsContext);
     const [loginErrors, setLoginErrors] = useState(initialLogInFormErrors);
-    // const [disabled, setDisabled] = useState(true);
-
+    const [disabled, setDisabled] = useState(true);
+    
+    const { isLoggedIn, setIsLoggedIn, user_id, setUserId } = useContext(GlobalPropsContext);
     let history = useHistory();
 
 
@@ -50,6 +50,13 @@ export default function Login({ getUserInfo, getUsersPlants }) {
         })
     }
 
+    useEffect(() => {
+        loginSchema
+            .isValid(loginFormValues)
+            .then(isSchemaValid => {
+                setDisabled(!isSchemaValid)
+            })
+    }, [loginFormValues]);
 
     const loginSubmitHandler = (e) => {
         e.preventDefault();
@@ -108,7 +115,7 @@ export default function Login({ getUserInfo, getUsersPlants }) {
                     onChange={onChange}
                     value={loginFormValues.password}
                 />
-                <button type="submit">
+                <button type="submit" disabled={disabled}>
                     Log In
                 </button>
             </form>
