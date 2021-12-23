@@ -16,7 +16,6 @@ export default function EditPlant() {
     });
 
     const handleChange = (e) => {
-        // setUsersPlants({ ...usersPlants, [e.target.name]: e.target.value });
         setInputs({ ...inputs, [e.target.name]: e.target.value });
     };
 
