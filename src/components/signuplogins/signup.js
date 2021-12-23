@@ -173,6 +173,13 @@ export default function Signup() {
                         Sign Up!
                     </button>
                 </form>
+                <div className='errors'>
+                    <p>{signUpFormValueErrors.firstName}</p>
+                    <p>{signUpFormValueErrors.lastName}</p>
+                    <p>{signUpFormValueErrors.username}</p>
+                    <p>{signUpFormValueErrors.password}</p>
+                    <p>{signUpFormValueErrors.phoneNumber}</p>
+                </div>
             </div>
         </div>
     )

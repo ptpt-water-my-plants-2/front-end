@@ -10,18 +10,18 @@ import { Redirect } from "react-router-dom";
 import { GlobalPropsContext } from '../GlobalPropsContext'
 import axios from 'axios';
 import { loginSchema } from "../../validation/formSchemas";
-
+import * as yup from 'yup';
 
 // Initial log in form values
 const initialLogInFormValues = { username: "", password: "" };
-
+const initialLogInFormErrors = { username: "", password: "" };
 
 export default function Login({ getUserInfo, getUsersPlants }) {
     const [loginFormValues, setLogInFormValues] = useState(initialLogInFormValues);
-    const { isLoggedIn, setIsLoggedIn, user_id, setUserId } = useContext(GlobalPropsContext);
-    const [loginError, setLoginError] = useState(false);
+    const [loginErrors, setLoginErrors] = useState(initialLogInFormErrors);
     const [disabled, setDisabled] = useState(true);
-
+    
+    const { isLoggedIn, setIsLoggedIn, user_id, setUserId } = useContext(GlobalPropsContext);
     let history = useHistory();
 
 
@@ -33,12 +33,30 @@ export default function Login({ getUserInfo, getUsersPlants }) {
 
 
     const onChange = (e) => {
+        const { name, value } = e.target;
+
+        yup.reach(loginSchema, name)
+            .validate(value)
+            .then(() => {
+                setLoginErrors({ ...loginErrors, [name]: "" })
+            })
+            .catch(err => {
+                setLoginErrors({ ...loginErrors, [name]: err.message })
+            });
+
         setLogInFormValues({
             ...loginFormValues,
-            [e.target.name]: e.target.value
+            [name]: value
         })
     }
 
+    useEffect(() => {
+        loginSchema
+            .isValid(loginFormValues)
+            .then(isSchemaValid => {
+                setDisabled(!isSchemaValid)
+            })
+    }, [loginFormValues]);
 
     const loginSubmitHandler = (e) => {
         e.preventDefault();
@@ -64,13 +82,13 @@ export default function Login({ getUserInfo, getUsersPlants }) {
     }
 
 
-    useEffect(() => {
-        loginSchema
-            .isValid(loginFormValues)
-            .then(isSchemaValid => {
-                setDisabled(!isSchemaValid)
-            })
-    })
+    // useEffect(() => {
+    //     loginSchema
+    //         .isValid(loginFormValues)
+    //         .then(isSchemaNotValid => {
+    //             setDisabled(!isSchemaNotValid)
+    //         })
+    // }, [])
 
 
 
@@ -97,11 +115,14 @@ export default function Login({ getUserInfo, getUsersPlants }) {
                     onChange={onChange}
                     value={loginFormValues.password}
                 />
-                <button type="submit">
+                <button type="submit" disabled={disabled}>
                     Log In
                 </button>
             </form>
-
+            <div className='errors'>
+                <p>{loginErrors.username}</p>
+                <p>{loginErrors.password}</p>
+            </div>
         </div>
     )
 }
