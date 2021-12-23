@@ -20,8 +20,8 @@ export default function Login({ getUserInfo, getUsersPlants }) {
     const [loginFormValues, setLogInFormValues] = useState(initialLogInFormValues);
     const [loginErrors, setLoginErrors] = useState(initialLogInFormErrors);
     const [disabled, setDisabled] = useState(true);
-    
-    const { isLoggedIn, setIsLoggedIn, user_id, setUserId } = useContext(GlobalPropsContext);
+
+    const { setIsLoggedIn, setUserId } = useContext(GlobalPropsContext);
     let history = useHistory();
 
     const onChange = (e) => {

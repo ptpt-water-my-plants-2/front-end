@@ -78,6 +78,8 @@ export default function EditPlant() {
             });
     }
 
+    let d = currentPlant && (currentPlant.h2OFrequency < 2) ? "day" : "days"
+
     return (
         <div>
             <h1>{user.username}'s plant: </h1>
@@ -85,7 +87,7 @@ export default function EditPlant() {
                 <div>
                     <p>Nickname: {(currentPlant) && currentPlant.nickname}</p>
                     <p>Species: {(currentPlant) && currentPlant.species}</p>
-                    <p>H2O Frequency: {(currentPlant) && currentPlant.h2OFrequency}</p>
+                    <p>H2O Frequency: Every {(currentPlant) && currentPlant.h2OFrequency} {d}</p>
                     <p>Plant Owner: {(currentPlant) && user.username}</p>
                 </div>
             </div>

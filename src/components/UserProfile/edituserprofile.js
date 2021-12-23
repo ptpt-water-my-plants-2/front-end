@@ -38,12 +38,12 @@ export default function EditUserProfile() {
 
     return (
         <div>
-            <h1>{user.username}'s PROFILE</h1>
+            <h1>{user && user.username}'s PROFILE</h1>
             <div className='user-info'>
                 <div>
-                    <p>Username: {user.username}</p>
-                    <p>Phone Number: {user.phoneNumber}</p>
-                    <p>User Id: {user.user_id}</p>
+                    <p>Username: {user && user.username}</p>
+                    <p>Phone Number: {user && user.phoneNumber}</p>
+                    <p>User Id: {user && user.user_id}</p>
                 </div>
             </div>
 

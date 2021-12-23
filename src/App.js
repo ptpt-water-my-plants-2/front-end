@@ -1,7 +1,8 @@
 import './App.css';
 import { useState, useEffect } from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-
+import { Redirect } from "react-router";
+import { useHistory } from 'react-router';
 
 import Login from './components/signuplogins/login';
 import Signup from './components/signuplogins/signup'
@@ -25,15 +26,27 @@ function App() {
   const [IsFetchingUserInfo, setIsFetchingUserInfo] = useState(false);
 
   // BUILD THIS TO KEEP USER LOGGED IN by token when they don't click logout
-  // useEffect(() => {
-  //   //api call to check token
-  //   //post request tpass in token
-  //   // backend router needs to validate token and then send back user_id that belongs to token
-  //   // loclalstorage.getitem.(:token)
-  //   //if response then isLoggedIn = true
-  //   //setUserId   setUserPlants
-  //   //
-  // }, [])
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      setIsLoggedIn(true)
+      axiosWithAuth().post('https://water-my-plants-app2.herokuapp.com/api/auth/')
+        .then((res => {
+          setIsLoggedIn(true)
+          setUserId(res.data)
+          getUserInfo(res.data)
+          getUsersPlants(res.data)
+
+        }))
+        .catch(err => {
+          console.log(err);
+          <Redirect to="/login" />
+        })
+    } else {
+      return <Redirect to='/login' />
+    }
+  }, [])
+
+
 
   //GET USER INFO FROM USER ID
   async function getUserInfo(id) {
@@ -57,11 +70,12 @@ function App() {
     try {
       const res = await axiosWithAuth().get(`https://water-my-plants-app2.herokuapp.com/api/users/${id}/users-plants`);
       setUsersPlants(res.data) // this is an array of objects
+      setIsFetchingUsersPlants(false);
     }
     catch (err) {
       console.log("error: ", err);
     }
-    setIsFetchingUsersPlants(false);
+
   }
 
 
@@ -70,7 +84,7 @@ function App() {
 
     <Router>
       <div className="App">
-        <GlobalPropsContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser, user_id, setUserId, usersPlants, IsFetchingUsersPlants, getUsersPlants, getUserInfo }}>
+        <GlobalPropsContext.Provider value={{ IsFetchingUserInfo, isLoggedIn, setIsLoggedIn, user, setUser, user_id, setUserId, usersPlants, IsFetchingUsersPlants, getUsersPlants, getUserInfo }}>
 
           <NavBar />
           <Switch>
@@ -81,7 +95,7 @@ function App() {
             <Route exact path="/logout"><Logout setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} setUserId={setUserId} /></Route>
 
             <PrivateRoute exact path="/addnewplant"><AddPlant /></PrivateRoute>
-            
+
             <PrivateRoute path="/edituserprofile"><EditUserProfile /></PrivateRoute>
 
             <PrivateRoute path="/details/:id"><PlantDetails /></PrivateRoute>

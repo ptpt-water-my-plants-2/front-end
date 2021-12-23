@@ -32,7 +32,7 @@ export default function NavBar() {
                     {(isLoggedIn === true) && <li><Link to="/addnewplant">Add a Plant</Link></li>}
 
                     {/* User sees link for user settings logged in */}
-                    {(isLoggedIn === true) && <li><Link to="/edituserprofile">Edit Profile</Link></li>}
+                    {(isLoggedIn === true) && <li><Link to="/edituserprofile">Profile</Link></li>}
 
 
                     {/* login shown only when not logged in */}

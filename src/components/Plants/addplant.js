@@ -47,7 +47,7 @@ export default function AddPlant() {
             })
     }, [inputs]);
 
-    const updatesBeingSent = {
+    const inputsBeingSent = {
         nickname: inputs.nickname,
         species: inputs.species,
         h2OFrequency: inputs.h2OFrequency,
@@ -57,7 +57,7 @@ export default function AddPlant() {
     const postNewPlant = (e) => {
         e.preventDefault();
         axiosWithAuth()
-            .post('https://water-my-plants-app2.herokuapp.com/api/plants/', updatesBeingSent)
+            .post('https://water-my-plants-app2.herokuapp.com/api/plants/', inputsBeingSent)
             .then((res) => {
                 console.log(res);
                 setInputs({
