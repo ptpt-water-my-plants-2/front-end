@@ -169,7 +169,7 @@ export default function Signup() {
                         onChange={onChange}
                         value={signUpFormValues.retypePassword}
                     /> */}
-                    <button type="submit">
+                    <button type="submit" disabled={disabled}>
                         Sign Up!
                     </button>
                 </form>
