@@ -15,7 +15,6 @@ export default function NavBar() {
         localStorage.removeItem("token")
 
         setIsLoggedIn(false)
-        console.log(isLoggedIn)
 
         history.push('/login');
     }

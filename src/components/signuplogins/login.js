@@ -24,14 +24,6 @@ export default function Login({ getUserInfo, getUsersPlants }) {
     const { isLoggedIn, setIsLoggedIn, user_id, setUserId } = useContext(GlobalPropsContext);
     let history = useHistory();
 
-
-    // useEffect(() => {
-    //     axios.post('https://water-my-plants-app2.herokuapp.com/api/auth/login', loginFormValues)
-    //         .then(res => console.log(res))
-    //         .catch(err => console.log(err));
-    // }, []);
-
-
     const onChange = (e) => {
         const { name, value } = e.target;
 
@@ -63,13 +55,10 @@ export default function Login({ getUserInfo, getUsersPlants }) {
         axios.post('https://water-my-plants-app2.herokuapp.com/api/auth/login', loginFormValues)
             .then((res => {
                 localStorage.setItem('token', res.data.token);
-                console.log(res, "res")
                 if (localStorage.getItem('token')) {
                     setIsLoggedIn(true)
                     setUserId(res.data.user_id)
-                    getUserInfo(res.data.user_id).then((res) => {
-                        console.log(res, "userInfo from login")
-                    });
+                    getUserInfo(res.data.user_id)
                     getUsersPlants(res.data.user_id).then((res) => {
                         history.push("/")
                     })
@@ -80,18 +69,6 @@ export default function Login({ getUserInfo, getUsersPlants }) {
                 <Redirect to="/login" />
             })
     }
-
-
-    // useEffect(() => {
-    //     loginSchema
-    //         .isValid(loginFormValues)
-    //         .then(isSchemaNotValid => {
-    //             setDisabled(!isSchemaNotValid)
-    //         })
-    // }, [])
-
-
-
 
     return (
         <div>

@@ -1,18 +1,13 @@
 import { useState, useContext } from 'react';
 import { GlobalPropsContext } from "../GlobalPropsContext";
-
-// const fakeUser = {
-//     username: 'idkw',
-//     password: '1234',
-//     phoneNumber: '123-555-6666'
-// }
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 export default function EditUserProfile() {
     const [userValues, setUserValues] = useState({
         password: '',
         phoneNumber: ''
     })
-    const { user, setUser } = useContext(GlobalPropsContext);
+    const { user, setUser, user_id, getUserInfo } = useContext(GlobalPropsContext);
 
     const handleChanges = e => {
         setUserValues({
@@ -21,23 +16,25 @@ export default function EditUserProfile() {
         })
     }
 
-    // console.log(userValues);
+    const updatedInputs = {
+        password: userValues.password,
+        phoneNumber: userValues.phoneNumber
+    };
 
     const editInfo = e => {
         e.preventDefault();
-        setUserValues({
-            ...userValues,
-            password: '',
-            phoneNumber: ''
-        })
-        setUser({
-            ...user,
-            password: userValues.password,
-            phoneNumber: userValues.phoneNumber
-        });
+        axiosWithAuth().put(`https://water-my-plants-app2.herokuapp.com/api/users/${user_id}`, updatedInputs)
+            .then(res => {
+                setUserValues({
+                    password: '',
+                    phoneNumber: ''
+                })
+                getUserInfo(user_id).then((res) => {
+                    console.log(res, "userInfo from login")
+                });
+            })
+            .catch(err => console.log(err));
     }
-
-    // console.log(user);
 
     return (
         <div>
@@ -54,7 +51,6 @@ export default function EditUserProfile() {
                 <h2>Update Your User Information:</h2>
                 <form onSubmit={editInfo} className='otherForm'>
                     <label>
-                        {/* <p>Password:</p> */}
                         <input
                             placeholder="new password"
                             type='password'
@@ -64,7 +60,6 @@ export default function EditUserProfile() {
                         />
                     </label>
                     <label>
-                        {/* <p> Phone Number: </p> */}
                         <input
                             placeholder="new phone number"
                             type='text'

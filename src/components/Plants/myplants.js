@@ -5,12 +5,10 @@ import PlantCard from "./plantCard"
 export default function MyPlants() {
     const { usersPlants, user, IsFetchingUsersPlants } = useContext(GlobalPropsContext);
 
-
     return (
         <div>
             {user && <h1>{user.username}'s PLANTS</h1>}
             <div className="plantSection">
-                {console.log(usersPlants)}
                 {IsFetchingUsersPlants && <p>"Loading Plants..."</p>}
                 {usersPlants && usersPlants.map((eachPlant) => (
                     <PlantCard eachPlant={eachPlant} key={eachPlant.plantId} />

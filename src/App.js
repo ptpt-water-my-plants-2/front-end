@@ -24,21 +24,16 @@ function App() {
   const [IsFetchingUsersPlants, setIsFetchingUsersPlants] = useState(false)
   const [IsFetchingUserInfo, setIsFetchingUserInfo] = useState(false);
 
-  console.log(user_id, "user_id")
-  console.log(isLoggedIn, "isLoggedIn")
-  console.log(usersPlants, "usersPlants")
-  console.log(usersPlants, "usersPlants")
-
   // BUILD THIS TO KEEP USER LOGGED IN by token when they don't click logout
-  useEffect(() => {
-    //api call to check token
-    //post request tpass in token
-    // backend router needs to validate token and then send back user_id that belongs to token
-    // loclalstorage.getitem.(:token)
-    //if response then isLoggedIn = true
-    //setUserId   setUserPlants
-    //
-  }, [])
+  // useEffect(() => {
+  //   //api call to check token
+  //   //post request tpass in token
+  //   // backend router needs to validate token and then send back user_id that belongs to token
+  //   // loclalstorage.getitem.(:token)
+  //   //if response then isLoggedIn = true
+  //   //setUserId   setUserPlants
+  //   //
+  // }, [])
 
   //GET USER INFO FROM USER ID
   async function getUserInfo(id) {
@@ -46,7 +41,6 @@ function App() {
 
     try {
       const res = await axiosWithAuth().get(`https://water-my-plants-app2.herokuapp.com/api/users/${id}`);
-      console.log(res, "get user info res")
       setUser(res.data[0])
     }
     catch (err) {
@@ -62,7 +56,6 @@ function App() {
 
     try {
       const res = await axiosWithAuth().get(`https://water-my-plants-app2.herokuapp.com/api/users/${id}/users-plants`);
-      console.log(res, "get users plants-- res")
       setUsersPlants(res.data) // this is an array of objects
     }
     catch (err) {
@@ -77,7 +70,7 @@ function App() {
 
     <Router>
       <div className="App">
-        <GlobalPropsContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser, user_id, setUserId, usersPlants, IsFetchingUsersPlants, getUsersPlants }}>
+        <GlobalPropsContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser, user_id, setUserId, usersPlants, IsFetchingUsersPlants, getUsersPlants, getUserInfo }}>
 
           <NavBar />
           <Switch>
@@ -88,11 +81,10 @@ function App() {
             <Route exact path="/logout"><Logout setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} setUserId={setUserId} /></Route>
 
             <Route exact path="/addnewplant"> <AddPlant /></Route>
+            
             <Route path="/edituserprofile"> <EditUserProfile /></Route>
 
             <Route path="/details/:id"> <PlantDetails /></Route>
-
-            {/* <Route exact path="/"><Home /></Route> */}
 
             <PrivateRoute exact path="/" component={Home} />
           </Switch>
