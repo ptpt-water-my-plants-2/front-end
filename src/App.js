@@ -8,41 +8,12 @@ import Signup from './components/signuplogins/signup'
 import NavBar from './components/Navbars/navbar';
 import Home from './components/home'
 import AddPlant from './components/Plants/addplant'
-import EditPlant from './components/Plants/editplant'
 import EditUserProfile from './components/UserProfile/edituserprofile'
 import PlantDetails from './components/Plants/plantdetails'
 import PrivateRoute from './components/PrivateRoute'
 import { GlobalPropsContext } from './components/GlobalPropsContext';
 import axiosWithAuth from './components/utils/axiosWithAuth';
 import Logout from './components/signuplogins/logout';
-
-
-const initialFakePlantData = [
-  {
-    'plantId': 1,
-    'nickname': 'Corny',
-    'species': 'Corn Plant',
-    'h20Frequency': 10, // EVERY 10 DAYS
-    // 'howMuchWater': '1/4 cup',
-    // 'image': ''
-  },
-  {
-    'plantId': 2,
-    'nickname': 'Spidy',
-    'species': 'Spider Plant',
-    'h20Frequency': 7, // 7 DAYS
-    // 'howMuchWater': '2 cups',
-    // 'image': ''
-  },
-  {
-    'plantId': 3,
-    'nickname': 'Orchid',
-    'species': 'Orchid Species',
-    'h20Frequency': 7,  // 7 DAYS
-    // 'howMuchWater': '1/4 cup',
-    // 'image': ''
-  },
-]
 
 
 function App() {
@@ -116,7 +87,6 @@ function App() {
 
             <Route exact path="/addnewplant"> <AddPlant /></Route>
             <Route path="/edituserprofile"> <EditUserProfile /></Route>
-            <Route exact path="/editplant"> <EditPlant /></Route>
 
             <Route path="/details/:id"> <PlantDetails /></Route>
 

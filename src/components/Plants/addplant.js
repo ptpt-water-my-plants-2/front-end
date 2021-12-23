@@ -1,3 +1,4 @@
+import '../../App.css'
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GlobalPropsContext } from '../GlobalPropsContext';
@@ -54,21 +55,19 @@ export default function AddPlant() {
            .post('https://water-my-plants-app2.herokuapp.com/api/plants/', inputs)
            .then((res) => {
                 console.log(res);
-                
                 setUsersPlants({
                     ...usersPlants,
                     nickname: inputs.nickname,
                     species: inputs.species,
                     h2OFrequency: inputs.h2OFrequency
                 });
-                
                 setInputs({
                     ...inputs,
                     nickname: '',
                     species: '',
                     h2OFrequency: ''
                 });
-            
+
                 history.push('/');
             })
             .catch((err) => {
@@ -79,7 +78,7 @@ export default function AddPlant() {
     return (
         <div className="add-plant">
             <h1>ADD A NEW PLANT</h1>
-            <form className="add-form" onSubmit={postNewPlant}>
+            <form className="add-form otherForm" onSubmit={postNewPlant}>
                 {/* <label>
                 Plant Id
                 <input
