@@ -80,9 +80,11 @@ export default function EditPlant() {
 
     let d = currentPlant && (currentPlant.h2OFrequency < 2) ? "day" : "days"
 
+    let capitalizedUser = user.username.charAt(0).toUpperCase() + user.username.slice(1)
+
     return (
         <div>
-            <h1>{user.username}'s plant: </h1>
+            <h1 className="updateH1">{capitalizedUser}'s plant: </h1>
             <div className='user-info'>
                 <div>
                     <p>Nickname: {(currentPlant) && currentPlant.nickname}</p>
@@ -92,7 +94,7 @@ export default function EditPlant() {
                 </div>
             </div>
             <div className='edit-form'>
-                <h2>EDIT PLANT</h2>
+                <h2 className="updateH2">EDIT PLANT</h2>
                 <form onSubmit={editplant} className='otherForm'>
 
                     <label>
@@ -127,7 +129,7 @@ export default function EditPlant() {
                         />
                     </label>
 
-                    <button className='editUserButton'>Submit Plant Updates</button>
+                    <button className='editUserButton'>Submit Updates</button>
                 </form>
                 <button onClick={() => deletePlantById()} className='deletePlantButton'>Delete Plant</button>
             </div>

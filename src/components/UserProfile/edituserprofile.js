@@ -36,9 +36,12 @@ export default function EditUserProfile() {
             .catch(err => console.log(err));
     }
 
+    const userNameCapitalized = user.username.charAt(0).toUpperCase() + user.username.slice(1)
+
+
     return (
-        <div>
-            <h1>{user && user.username}'s PROFILE</h1>
+        <div className='editPlantConatainer'>
+            <h1 className="updateH1">{user && userNameCapitalized}'s PROFILE</h1>
             <div className='user-info'>
                 <div>
                     <p>Username: {user && user.username}</p>
@@ -48,7 +51,7 @@ export default function EditUserProfile() {
             </div>
 
             <div className='edit-form'>
-                <h2>Update Your User Information:</h2>
+                <h2 className="updateH2">Update User Information:</h2>
                 <form onSubmit={editInfo} className='otherForm'>
                     <label>
                         <input

@@ -11,6 +11,8 @@ import { GlobalPropsContext } from '../GlobalPropsContext'
 import axios from 'axios';
 import { loginSchema } from "../../validation/formSchemas";
 import * as yup from 'yup';
+import WMPBanner from "../../images/WMPBANNER2.jpg"
+
 
 // Initial log in form values
 const initialLogInFormValues = { username: "", password: "" };
@@ -72,33 +74,36 @@ export default function Login({ getUserInfo, getUsersPlants }) {
 
     return (
         <div>
-            <form onSubmit={loginSubmitHandler} className="form">
-                {<h1>Login</h1>}
-                <input
-                    placeholder="username"
-                    name="username"
-                    label="username"
-                    type="text"
-                    id="username"
-                    onChange={onChange}
-                    value={loginFormValues.username}
-                />
-                <input
-                    placeholder="password"
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    onChange={onChange}
-                    value={loginFormValues.password}
-                />
-                <button type="submit" disabled={disabled}>
-                    Log In
-                </button>
-            </form>
-            <div className='errors'>
-                <p>{loginErrors.username}</p>
-                <p>{loginErrors.password}</p>
+            <img alt="water my plant banner" className="wmpBanner" src={WMPBanner}></img>
+            <div>
+                <form onSubmit={loginSubmitHandler} className="form">
+                    {<h1>Login</h1>}
+                    <input
+                        placeholder="username"
+                        name="username"
+                        label="username"
+                        type="text"
+                        id="username"
+                        onChange={onChange}
+                        value={loginFormValues.username}
+                    />
+                    <input
+                        placeholder="password"
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        onChange={onChange}
+                        value={loginFormValues.password}
+                    />
+                    <button type="submit" disabled={disabled}>
+                        Log In
+                    </button>
+                </form>
+                <div className='errors'>
+                    <p>{loginErrors.username}</p>
+                    <p>{loginErrors.password}</p>
+                </div>
             </div>
         </div>
     )
