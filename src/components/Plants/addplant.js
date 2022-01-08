@@ -76,10 +76,10 @@ export default function AddPlant() {
     return (
         <div className="add-plant">
             <h1>ADD A NEW PLANT</h1>
-            <form className="add-form otherForm" onSubmit={postNewPlant}>
+            <form className="add-form" onSubmit={postNewPlant}>
 
                 <label>
-                    Nickname:
+                    <p> Nickname:</p>
                     <input
                         type="text"
                         name="nickname"
@@ -88,7 +88,7 @@ export default function AddPlant() {
                     />
                 </label>
                 <label>
-                    Species:
+                    <p>Species:</p>
                     <input
                         type="text"
                         name="species"
@@ -99,7 +99,7 @@ export default function AddPlant() {
                 </label>
 
                 <label>
-                    H2O Frequency:
+                    <p> H2O Frequency:</p>
                     <input
                         type="integer"
                         name="h2OFrequency"

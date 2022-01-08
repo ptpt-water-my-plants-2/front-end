@@ -8,6 +8,8 @@ import axios from "axios";
 //import { GlobalPropsContext } from '../GlobalPropsContext';
 import { signupSchema } from "../../validation/formSchemas";
 import * as yup from 'yup';
+import WMPBanner from "../../images/WMPBANNER2.jpg"
+
 
 const initialsignUpFormValues = {
     firstName: '',
@@ -111,6 +113,8 @@ export default function Signup() {
 
     return (
         <div>
+            <img alt="water my plant banner" className="wmpBanner" src={WMPBanner}></img>
+
             <div>
                 <form onSubmit={registerNewUser} className="form">
                     {<h1>Sign Up</h1>}

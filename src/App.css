@@ -1,4 +1,4 @@
-/* $primary-lightgreen: 95A792;
+/* $primary-lightgreen: #95A792;
 $primary-darkgreen: #596C68;
 $primary-dark: #403F48;
 $primary-whitish: #E3D9CA; */
@@ -15,21 +15,10 @@ body {
   text-align: center;
 }
 
-.navBar {
-  width: 100%;
-  background-color: #95a792;
-  margin: 0;
-  margin-top: -25px;
-  padding: 10px 0px;
-  height: 50px;
-  -webkit-box-shadow: 0px 1px 5px #8a8181;
-  -moz-box-shadow: 0px 1px 5px #8a8181;
-  box-shadow: 0px 1px 5px #8a8181;
-}
-
 h1 {
   color: #95a792;
-  font-size: 2.3rem;
+  margin: 20px 0px -5px 0px;
+  font-size: 1.9rem;
   text-shadow: 2px 2px 2px #0a0909;
 }
 
@@ -63,7 +52,7 @@ a:hover {
 }
 
 .form {
-  margin: 75px auto 30px auto;
+  margin: 40px auto 30px auto;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -78,6 +67,10 @@ a:hover {
   -webkit-box-shadow: 0px 1px 5px #3d2121;
   -moz-box-shadow: 0px 1px 5px #8a8181;
   box-shadow: 0px 1px 5px #8a8181;
+}
+
+.form h1 {
+  margin-bottom: 20px;
 }
 
 .form input {
@@ -111,13 +104,14 @@ a:hover {
 } */
 
 .detailsButton {
-  width: 65%;
+  width: 60%;
   height: 45px;
-  margin: 5px;
+  margin: -3px;
   font-size: 1.2rem;
-  color: #403f48;
-  background-color: #95a792;
-  border-radius: 5px;
+  color: white;
+  background-color: #596c68;
+  border-radius: 7px;
+  border: solid white 1px;
 }
 
 /* plants DISPLAYED */
@@ -129,7 +123,7 @@ a:hover {
   align-content: center;
 }
 .plantCard {
-  color: #e3d9ca;
+  color: white;
   width: 80%;
   max-width: 360px;
   height: 230px;
@@ -175,7 +169,7 @@ img {
 .user-info div {
   text-align: left;
   border: 5px solid #596c68;
-  width: 60%;
+  width: 70%;
   padding-left: 30px;
   max-width: 400px;
   margin-top: 20px;
@@ -192,7 +186,8 @@ img {
 }
 
 .deletePlantButton {
-  width: 80%;
+  margin: 0 auto;
+  width: 50%;
   max-width: 360px;
   height: 50px;
   font-size: 20px;
@@ -205,7 +200,7 @@ img {
 
 .editUserButton {
   margin: 0 auto;
-  width: 75%;
+  width: 50%;
   max-width: 360px;
   height: 50px;
   font-size: 20px;
@@ -215,19 +210,22 @@ img {
   color: white;
 }
 
+.editPlantConatainer {
+  width: 100%;
+}
+
 .edit-form {
   /* border: 5px solid darkgreen; */
   margin-top: 50px;
-  display: flex;
+  width: 100%;
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
 }
 
 .edit-form form {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  text-align: center;
   /* border: 5px solid cyan; */
   /* width: 30%; */
 }
@@ -245,16 +243,17 @@ img {
 }
 
 .add-form {
-  /* display: flex;
+  /* display: flex; 
   flex-direction: column;
   text-align: left; */
-  margin: 75px auto 30px auto;
+  margin: 50px auto;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  align-content: center;
-  align-items: center;
-  width: 400px;
+  /* align-content: center;
+  align-items: center; */
+  width: 70%;
+  max-width: 800px;
   border: 1px solid black;
   padding: 20px 30px 20px 30px;
   color: #e3d9ca;
@@ -265,30 +264,94 @@ img {
   box-shadow: 0px 1px 5px #8a8181;
 }
 
+.otherForm {
+  width: 100%;
+}
+
 .otherForm label {
   margin-bottom: 10px;
   font-size: 25px;
+  display: block;
 }
 
 .otherForm input {
   /* margin-left: 10px;
   font-size: 25px; */
-  width: 400px;
+  width: 80%;
+  max-width: 410px;
   height: 40px;
-  margin: 5px;
+  margin: 5px auto;
+  text-align: center;
+  border-radius: 5px;
+  border: 0.5px solid rgb(34, 33, 33);
+}
+
+.add-form input {
+  /* margin-left: 10px;
+  font-size: 25px; */
+  width: 80%;
+  max-width: 410px;
+  height: 40px;
+  margin: 5px auto;
   text-align: center;
   border-radius: 5px;
   border: 0.5px solid rgb(34, 33, 33);
 }
 
 .add-form button {
-  width: 160px;
+  width: 200px;
   height: 50px;
   font-size: 20px;
   border-radius: 15px;
   border: 3px solid white;
-  background-color: green;
+  background-color: #596c68;
   color: white;
   margin-top: 20px;
   align-self: center;
+}
+
+.updateH1 {
+  margin-top: 30px;
+}
+
+.updateH2 {
+  margin-top: -15px;
+}
+
+/* Navigation */
+.navBar {
+  width: 100%;
+  background-color: #95a792;
+  margin: 0;
+  margin-top: -25px;
+  padding: 10px 0px;
+  height: 50px;
+  -webkit-box-shadow: 0px 1px 5px #8a8181;
+  -moz-box-shadow: 0px 1px 5px #8a8181;
+  box-shadow: 0px 1px 5px #8a8181;
+}
+
+.mobileNav {
+  display: none;
+}
+
+.computerNav {
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  .mobileNav {
+    display: block;
+  }
+
+  .computerNav {
+    display: none;
+  }
+}
+
+.wmpBanner {
+  width: 85%;
+  margin: 0 auto;
+  margin-top: 25px;
+  max-width: 600px;
 }
